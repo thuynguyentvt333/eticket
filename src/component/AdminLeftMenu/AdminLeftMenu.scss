@@ -1,0 +1,14 @@
+.admin-menu-left-container {
+    display: flex;
+    flex-direction: column;
+    .item-menu {
+        display: flex;
+        align-items: center;
+        margin: 3px 0;
+        background-color: #01B54A;
+        color: white;
+        cursor: pointer;
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+}
