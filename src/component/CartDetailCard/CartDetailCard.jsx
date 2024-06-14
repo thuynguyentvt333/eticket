@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addToCart, removeFromCart, deleteFromCart } from '../../redux/actions/CartActioin/cartActions';
+import { addOneToCart, removeFromCart, deleteFromCart } from '../../redux/actions/CartActioin/cartActions';
 import { FaPlus, FaMinus, FaTrashAlt } from 'react-icons/fa';
 
 const CartDetailCard = ({ item }) => {
     const dispatch = useDispatch();
 
     const addOneProduct = (itemCart) => {
-        dispatch(addToCart(itemCart));
+        dispatch(addOneToCart(itemCart));
     };
 
     const minusOneProduct = (itemCart) => {
@@ -19,14 +19,16 @@ const CartDetailCard = ({ item }) => {
     };
 
     // Tính giá tiền của sản phẩm
-    const totalPrice = item.salePrice * item.quantity;
+    const totalPrice = item.price * item.quantity; // Use "price" for calculation
 
     return (
         <>
             <div className="image-product">
-                <img src={item.image} alt={item.name} />
+                {/* You might need to display an image from the cart item here */}
+                {/* Example: <img src={item.image} alt={item.name} /> */}
             </div>
-            <div className="name-product">{item.name}</div>
+            <div className="name-product">{item.eventName}</div> {/* Display the event name */}
+            <div className="name-product">{item.type_name}</div> {/* Display the ticket type */}
             <div className="cart-detail-quanty">
                 <FaPlus className="icon-update-cart" onClick={() => addOneProduct(item)} />
                 <span>{item.quantity}</span>

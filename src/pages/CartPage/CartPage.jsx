@@ -9,7 +9,7 @@ import './CartPage.scss';
 const CartPage = () => {
     const cartItems = useSelector(state => state.cart.items);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const totalPrice = cartItems.reduce((total, item) => total + item.salePrice * item.quantity, 0);
+    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0); 
 
     const navigate = useNavigate();
 

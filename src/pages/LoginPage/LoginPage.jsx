@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserAction } from '../../redux/actions/UserAction/userActions';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     // Lấy currentUser từ state của Redux
     const currentUser = useSelector(state => state.user.currentUser);  
@@ -33,16 +34,17 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (loginCompleted && isLoggedIn) {
-            navigate('/');
+            const redirectTo = location.state?.from?.pathname || '/';
+            navigate(redirectTo);
             toast.success("Login success!");
         } else if (loginCompleted && errorMessage) {
             toast.error(errorMessage);
         }
-    }, [loginCompleted, isLoggedIn, currentUser, errorMessage, navigate]);
+    }, [loginCompleted, isLoggedIn, currentUser, errorMessage, navigate, location]);
 
     return (
         <div className="container my-5">
-            <div >
+            <div>
                 <div className="col-md-6">
                     <div className="card mt-5">
                         <div className="card-body">
