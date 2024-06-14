@@ -1,0 +1,87 @@
+// .event-card {
+//     background-color: #ab8585;
+//     border-radius: 8px;
+//     overflow: hidden;
+//     text-align: center;
+//     width: 80%; /* Adjust width as necessary to ensure centering */
+//     margin: 20px auto; /* Center the event card horizontally */
+//   }
+  
+  // .event-card img {
+  //   width: 100%;
+  //   height: 300px; /* Set a fixed height for the images */
+  //   object-fit: cover; /* Ensures images are properly cropped to fit the container */
+  // }
+  
+//   .event-info {
+//     padding: 15px;
+//   }
+  
+//   .event-info h3 {
+//     margin: 10px 0;
+//   }
+  
+//   .event-info p {
+//     margin: 10px 0;
+//   }
+  
+//   .event-info button {
+//     padding: 10px 15px;
+//     background-color: #4CAF50;
+//     color: #fff;
+//     border: none;
+//     cursor: pointer;
+//   }
+  .event-card {
+    margin-top: 20px;
+    margin-left: 9%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(209, 202, 202, 0.1);
+    transition: transform 0.2s;
+  }
+  
+
+.event-card:hover {
+  transform: translateY(-8px);
+}
+
+.event-card img {
+  width: 100%;
+  height: 396px;
+}
+
+.event-card-content {
+  padding: 16px;
+}
+
+.event-card h2 {
+  font-size: 1.5em;
+  margin: 0 0 8px 0;
+  color: #0a0a0a;
+}
+
+.event-card p {
+  font-size: 1em;
+  color: #0b0b0b;
+}
+
+.event-card button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 16px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.event-card button:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,48 @@
+.special-events {
+    // margin-top: 40px;
+    // text-align: center; /* Center the heading */
+    margin-top: 30px;
+    display: flex;
+    justify-content: center; /* Center the slider container */
+    align-items: center;
+    width: 70%;
+  
+  }
+  
+  .special-events h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  
+  .event-grid {
+    display: flex;
+    justify-content: center; /* Center the event cards horizontally */
+    flex-wrap: wrap;
+    gap: 20px; /* Optional: add space between cards */
+  }
+  
+  // .event-card img {
+  //   width: 300px;
+  //   height: 396px; /* Set a fixed height for the images */
+  //   object-fit: cover; /* Ensures images are properly cropped to fit the container */
+  // }
+  
+  .event-info {
+    padding: 15px;
+  }
+  
+  .event-info h3 {
+    margin: 10px 0;
+  }
+  
+  .event-info p {
+    margin: 10px 0;
+  }
+  
+  .event-info button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }

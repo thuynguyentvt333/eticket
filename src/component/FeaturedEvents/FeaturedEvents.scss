@@ -1,0 +1,36 @@
+.featured-events {
+    margin-bottom: 40px;
+    margin-left: 40px;
+    // padding-top: 40px;
+    display: flex;
+    justify-content: center; /* Center the slider container */
+    align-items: center;
+    width: 96%;
+    
+  }
+  
+  .slick-prev, .slick-next {
+    z-index: 1;
+  }
+  
+  .slick-dots li button:before {
+    color: white;
+    transform: scale(1.5); /* Tăng kích thước */
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .slick-slider {
+    width: 100%; /* Adjust this value as needed to center the content */
+  }
+  
+  .slick-list {
+    width: 100%;
+  }
+  
+  .slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+  

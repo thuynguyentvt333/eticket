@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaShoppingCart } from 'react-icons/fa';
 import 'bootstrap/js/dist/dropdown';
+import logo from '../../assets/product/logo.png';
+import './Header.scss';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,19 +26,18 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-dark text-light py-3">
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-md-3">
-            {/* <h1 className="mb-0">Phone Store</h1> */}
-          </div>
-          <div className="col-md-6">
-            <form className="input-group">
-              <input type="text" className="form-control" placeholder="Search..." />
-              <button className="btn btn-outline-light" type="button">Search</button>
-            </form>
-          </div>
-          <div className="col-md-3 text-end">
+    <header className="header">
+         <div className="header-container">
+      <div className="logo">
+        <img src={logo} alt="Ticketbox" />
+      </div>
+  
+      <div className="search">
+        <input type="text" placeholder="Search......." />
+        <button>Search</button>
+      </div>
+      
+      <div className="user-actions">
             {isLoggedIn ? (
               <div className="dropdown d-inline-block">
               <button className="btn btn-outline-light me-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,19 +48,20 @@ const Header = () => {
                 <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
               </ul>
             </div>
-            ) : (
-              <>
-                <Link to="/login" className="btn btn-outline-light me-2">Login</Link>
-                <Link to="/register" className="btn btn-primary me-2">Sign Up</Link>
-              </>
-            )}
-            <Link to="/cart" className="btn btn-outline-light position-relative">
-              <FaShoppingCart size={20} />
-              {totalItems > 0 && <span className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill">{totalItems}</span>}
-            </Link>
-          </div>
-        </div>
-        <div className="row">
+  ) : (
+    <>
+      <Link to="/login" className="btn btn-outline-light me-2">Login</Link>
+      <Link to="/register" className="btn btn-primary me-2">Sign Up</Link>
+    </>
+  )}
+  <Link to="/cart" className="btn btn-outline-light ">
+    <FaShoppingCart size={20} />
+    {totalItems > 0 && <span className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill">{totalItems}</span>}
+  </Link>
+</div>
+
+      </div>
+      <div className="row">
           <div className="col">
             <nav>
               <ul className="nav justify-content-center">
@@ -70,7 +72,7 @@ const Header = () => {
                   <a className="nav-link" href="#">Featured</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">New Event</a>
+                  <a className="nav-link" href="#">filter event</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">About</a>
@@ -82,9 +84,9 @@ const Header = () => {
             </nav>
           </div>
         </div>
-      </div>
+
     </header>
-  );
+  )
 };
 
 export default Header;

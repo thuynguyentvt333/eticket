@@ -9,9 +9,10 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     // Lấy currentUser từ state của Redux
-    const currentUser = useSelector(state => state.user.currentUser); 
+    const currentUser = useSelector(state => state.user.currentUser);  
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const errorMessage = useSelector(state => state.user.error);
+    const token = useSelector(state => state.user.token);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,13 +32,8 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        if (loginCompleted && isLoggedIn && currentUser) {
-            const { group } = currentUser;
-            if (group === 'customer') {
-                navigate('/');
-            } else if (group === 'admin') {
-                navigate('/admin');
-            }
+        if (loginCompleted && isLoggedIn) {
+            navigate('/');
             toast.success("Login success!");
         } else if (loginCompleted && errorMessage) {
             toast.error(errorMessage);
@@ -46,7 +42,7 @@ const LoginPage = () => {
 
     return (
         <div className="container my-5">
-            <div className="row justify-content-center">
+            <div >
                 <div className="col-md-6">
                     <div className="card mt-5">
                         <div className="card-body">
@@ -54,7 +50,7 @@ const LoginPage = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Email</label>
-                                    <input type="email" className="form-control" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <input type="text" className="form-control" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">Password</label>

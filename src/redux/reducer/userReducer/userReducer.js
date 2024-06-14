@@ -2,9 +2,11 @@ import { REGISTER_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, SERVER_ERROR } from
 
 // Trạng thái ban đầu
 const initialState = {
-    currentUser: null, // Thông tin của người dùng hiện tại
-    isLoggedIn: false, // Trạng thái đăng nhập
-    error: null
+    currentUser: null,
+    token: null,
+    isLoggedIn: false,
+    error: null,
+    roleId: null
 };
 
 // Khởi tạo state từ localStorage (nếu có)
@@ -17,15 +19,15 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
             // Xử lý logic đăng ký ở đây
             return {
                 ...state,
-                currentUser: action.payload, // Lưu thông tin người dùng đã đăng ký
-                isLoggedIn: true, // Đặt trạng thái đăng nhập là true
+                token: action.payload.token, // Lưu token
+                isLoggedIn: true,
                 error: null
             };
 
         case LOGIN_USER_SUCCESS:
             const newState = {
                 ...state,
-                currentUser: action.payload.DT, // Lưu thông tin người dùng đã đăng nhập
+                currentUser: action.payload, // Lưu thông tin người dùng đã đăng nhập
                 isLoggedIn: true,
                 error: null
             };
@@ -39,7 +41,7 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
                 ...state,
                 currentUser: null,
                 isLoggedIn: false,
-                error: action.payload.EM // lỗi từ server
+                error: action.payload// lỗi từ server
             };
 
         default:

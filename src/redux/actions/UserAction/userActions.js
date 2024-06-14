@@ -16,17 +16,20 @@ export const loginUserAction = (email, password) => {
     return async (dispatch) => {
         try {
             const response = await loginUser(email, password);
+            console.log("check res: ", response)
             const responseData = response.data;
-            if (responseData.EC === 0) {
+            if (response.status=== 200) {
                 dispatch({ type: LOGIN_USER_SUCCESS, payload: responseData });
-            } else if (responseData.EC === 1) {
+            } else if (response.status === 401) {
                 dispatch({ type: LOGIN_USER_FAIL, payload: responseData });
             } else {
                 dispatch({ type: SERVER_ERROR, payload: responseData });
             }
         } catch (error) {
-            console.log(error);
-            dispatch({ type: SERVER_ERROR, payload: responseData });
+            // console.log(error);
+            // dispatch({ type: SERVER_ERROR, payload: responseData });
+            const errorMessage = error.response ? error.response.data : error.message;
+            dispatch({ type: SERVER_ERROR, payload: errorMessage });
         }
     };
 };
