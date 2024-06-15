@@ -5,6 +5,8 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import CartDetailCard from '../../component/CartDetailCard/CartDetailCard';
 import './CartPage.scss';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const CartPage = () => {
     const cartItems = useSelector(state => state.cart.items);
@@ -13,12 +15,40 @@ const CartPage = () => {
 
     const navigate = useNavigate();
 
-    const handleOrder = () => {
+    const handleOrder = async () => {
+        console.log("check: ", cartItems)
         if (!cartItems || cartItems.length === 0) {
             toast.info('Giỏ hàng trống');
             return;
         }
-        // Xử lý đặt hàng ở đây
+
+        // Chuyển đổi dữ liệu giỏ hàng
+        const apiPayload = cartItems.map(item => ({
+            createTicketId: item.id,
+            quantity: item.quantity
+        }));
+
+        // Đọc token từ cookie
+        const token = Cookies.get('token');
+
+        try {
+            // Gọi API thêm giỏ hàng
+            const response = await axios.post('http://localhost:8080/cart/add', apiPayload, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.status === 200) {
+                toast.success('Đặt hàng thành công');
+                // Xử lý khi đặt hàng thành công, ví dụ như điều hướng tới trang khác
+                navigate('/home');
+            } else {
+                toast.error('Đặt hàng thất bại');
+            }
+        } catch (error) {
+            toast.error('Có lỗi xảy ra khi đặt hàng');
+            console.error('Order error: ', error);
+        }
     }
 
     return (

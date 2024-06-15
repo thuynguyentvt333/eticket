@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { REGISTER_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, SERVER_ERROR } from '../../actions/UserAction/userActionTypes';
 
 // Trạng thái ban đầu
@@ -25,14 +26,18 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
             };
 
         case LOGIN_USER_SUCCESS:
+            console.log("token: ", action.payload.token)
             const newState = {
                 ...state,
-                currentUser: action.payload, // Lưu thông tin người dùng đã đăng nhập
+                currentUser: action.payload,
+                token: action.payload.token,
                 isLoggedIn: true,
                 error: null
             };
             // Lưu thông tin người dùng xuống localStorage
             localStorage.setItem('userState', JSON.stringify(newState));
+            // Lưu token vào cookie
+            Cookies.set('token', action.payload.token);
             return newState;
 
         case LOGIN_USER_FAIL:
@@ -41,7 +46,7 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
                 ...state,
                 currentUser: null,
                 isLoggedIn: false,
-                error: action.payload// lỗi từ server
+                error: action.payload // lỗi từ server
             };
 
         default:
@@ -50,4 +55,3 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
 };
 
 export default userReducer;
-

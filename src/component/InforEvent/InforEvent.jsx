@@ -59,7 +59,7 @@ const InforEvent = () => {
       if (selectedTicket) {
         // Add selected ticket to cart with quantity
         dispatch(addToCart({ ...selectedTicket, eventName: event.name, quantity }));
-        navigate('/cart');
+        // navigate('/cart');
       } else {
         // Handle case where no ticket type is selected
         console.error("Ticket type not selected"); 
