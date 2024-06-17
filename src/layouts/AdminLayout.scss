@@ -4,26 +4,29 @@
     width: 100%;
     height: 100vh;
 
-    .admin-above {
-        width: 100%;
-        height: 50px;
-    }
+    // .admin-above {
+    //     width: 100%;
+    //     height: 50px;
+    // }
 
     .admin-below {
         width: 100%;
         height: calc(100vh - 50px);
         display: flex;
 
-        .admin-menu-left {
-            width: 12%;
-            height: 100%;
-            border: 1px solid orange;
-        }
+        // .admin-menu {
+        //     width: 12%;
+        //     height: 100%;
+        //     border: 1px solid orange;
+        // }
 
         .admin-content-children {
-            width: 88%;
+            width: 100%;
             height: calc(100vh - 50px);
-            overflow-y: auto;
+            // overflow-y: auto;
         }
     }
+}
+.admin-header{
+    padding:0%;
 }

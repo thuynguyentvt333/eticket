@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserAction } from '../../redux/actions/UserAction/userActions';
 import { toast } from 'react-toastify';
+import '../LoginPage/LoginPage.scss';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
@@ -43,8 +44,8 @@ const LoginPage = () => {
     }, [loginCompleted, isLoggedIn, currentUser, errorMessage, navigate, location]);
 
     return (
-        <div className="container my-5">
-            <div>
+        <div className="container ">
+            <div className='change'>
                 <div className="col-md-6">
                     <div className="card mt-5">
                         <div className="card-body">

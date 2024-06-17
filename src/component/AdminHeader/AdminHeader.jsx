@@ -1,37 +1,57 @@
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import './AdminHeader.scss';
+import logo from '../../assets/product/logo.png'; 
+import { FaUserCircle } from 'react-icons/fa';
 
 const AdminHeader = () => {
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-    const currentUser = useSelector(state => state.user.currentUser);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation();
 
-    const handleLogout = () => {
-        // Sau khi đăng xuất, chuyển hướng về trang đăng nhập
-        navigate('/login');
-    };
-    return (
-        <div className='admin-header-container'>
-            <div className='container'>
-                {isLoggedIn && currentUser.group==="admin" && (
-                    <div className='text-end'>
-                        <div className="dropdown d-inline-block">
-                            <button className="btn btn-secondary me-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, {currentUser.fullname}
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style={{ minWidth: '95%' }}>
-                                <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
-                                <li><Link className="dropdown-item" to="/profile">Thông tin</Link></li>
-                                <li><Link className="dropdown-item" to="/">Trang chủ</Link></li>
-                            </ul>
-                        </div>
-                    </div>
-                )
-            }
-            </div>
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  return (
+    <header className="admin-header">
+      <div className="container">
+        <div className="logo">
+          <img src={logo} alt="Logo" />
         </div>
-        
-    )
+        <nav>
+          <ul className="nav-links">
+            <li>
+              <NavLink to="/admin/account">Account</NavLink> {/* Sử dụng NavLink */}
+            </li>
+            <li>
+              <NavLink to="/admin/event">Event</NavLink> {/* Sử dụng NavLink */}
+            </li>
+            <li>
+              <NavLink to="/admin/statistics">Thống kê</NavLink> {/* Sử dụng NavLink */}
+            </li>
+            <li className="dropdown" onMouseEnter={() => setIsDropdownOpen(true)} 
+              onMouseLeave={() => setIsDropdownOpen(false)}>
+              <span className="dropdown-toggle">Hệ thống</span> 
+              <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
+                <li>
+                  <NavLink to="/admin/category">Category</NavLink> {/* Sử dụng NavLink */}
+                </li>
+                <li>
+                  <NavLink to="/admin/role">Role</NavLink> {/* Sử dụng NavLink */}
+                </li>
+                <li>
+                  <NavLink to="/admin/payment">Payment</NavLink> {/* Sử dụng NavLink */}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div className="user-profile">
+          <span>Name</span> <FaUserCircle className="user-icon" />
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default AdminHeader;

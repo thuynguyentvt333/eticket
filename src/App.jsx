@@ -15,7 +15,8 @@ const  App =()=> {
     <Router>
       <div>
         <Routes>
-          <Route path="/admin/*" element={isLoggedIn && isAdmin ? <AdminRoutes /> : <Navigate to="/login" />} />
+          {/* <Route path="/admin/*" element={isLoggedIn && isAdmin ? <AdminRoutes /> : <Navigate to="/login" />} /> */}
+          <Route path="/admin/*" element={<AdminRoutes />} />
           <Route path="/*" element={<PublicRoutes />} />
    
         </Routes>

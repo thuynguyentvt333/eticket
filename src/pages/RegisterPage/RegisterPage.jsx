@@ -50,7 +50,7 @@ const RegisterPage = () => {
       };
 
     return (
-        <div className="container my-5 container-register">
+        
             <div className='content-register'>
                 <div className="col-md-6">
                     <div className="card mt-5">
@@ -92,7 +92,7 @@ const RegisterPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+       
     )
 }
 

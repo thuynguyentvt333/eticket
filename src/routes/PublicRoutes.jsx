@@ -8,6 +8,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import InforEvent from '../component/InforEvent/InforEvent';
 import SearchResults from '../component/Header/searchresult';
+import ManageEvent from '../component/ManageEvent/ManageEvent';
 
 const PublicRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const PublicRoutes = () => {
         <Route path="/eventinfor/:id" element={<InforEvent />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/manage-event" element={<ManageEvent />} />
       </Routes>
     </PublicLayout>
   );

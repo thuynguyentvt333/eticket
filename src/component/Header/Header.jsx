@@ -35,6 +35,9 @@ const Header = () => {
     event.preventDefault(); // Ngăn chặn form submit mặc định
     navigate(`/search?name=${searchTerm}`); // Chuyển hướng đến trang kết quả tìm kiếm
   };
+
+  // Lấy thông tin loại tài khoản từ Redux store
+  // const userType = useSelector(state => state.user.currentUser.userType); // Giả sử lưu thông tin userRole trong Redux store
   return (
     <header className="header">
          <div className="header-container">
@@ -42,6 +45,18 @@ const Header = () => {
         <img src={logo} alt="Ticketbox" />
       </div>
   
+      {/* {userType === 'Merchant' && ( */}
+          <div className="manage-event">
+            <Link to="/manage-event">
+              {/* ... (Logo "Create Event") */} manageevent
+            </Link>
+          </div>
+        {/* )} */}
+
+        <div className="admin-link">
+            <Link to="/admin">Admin</Link> 
+          </div>
+
       <div className="search">
         <form className='form' onSubmit={handleSearchSubmit}> {/* Thêm form để bắt sự kiện submit */}
           <input 
@@ -96,7 +111,7 @@ const Header = () => {
                 <a className="nav-link" href="#">Filter</a>
                 
                 </li> */}
-              <div className="filter-button">
+              <div className="filter">
         <FilterModal /> {/* Hiển thị nút Filter */}
       </div>
               </ul>

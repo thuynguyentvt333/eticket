@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const FilteredEvents = () => {
   const [events, setEvents] = useState([]);
 
