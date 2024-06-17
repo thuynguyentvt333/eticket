@@ -5,9 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminRoutes from './routes/AdminRoutes';
 import PublicRoutes from './routes/PublicRoutes';
 import { useSelector } from 'react-redux';
-// import EventContainer from './component/EventContainer/EventContainer.jsx';
-// import FeaturedEvents from './component/FeaturedEvents/FeaturedEvents.jsx';
-// import SpecialEvents from './component/SpecialEvents/SpecialEvents.jsx';
 import InforEvent from './component/InforEvent/InforEvent';
 
 const  App =()=> {
@@ -20,11 +17,11 @@ const  App =()=> {
         <Routes>
           <Route path="/admin/*" element={isLoggedIn && isAdmin ? <AdminRoutes /> : <Navigate to="/login" />} />
           <Route path="/*" element={<PublicRoutes />} />
-          {/* <Route path='/eventinfor' element={<InforEvent/>}></Route> */}
+   
         </Routes>
       </div>
       <ToastContainer />
-      {/* <EventContainer/> */}
+   
 
     </Router>
   );

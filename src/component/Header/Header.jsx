@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaShoppingCart } from 'react-icons/fa';
 import 'bootstrap/js/dist/dropdown';
 import logo from '../../assets/product/logo.png';
 import './Header.scss';
+import FilterModal from '../Header/Filter'
+
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const [searchTerm, setSearchTerm] = useState('');
   // Sử dụng hook useSelector để lấy thông tin đăng nhập từ store Redux
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const currentUser = useSelector(state => state.user.currentUser);
@@ -25,6 +27,14 @@ const Header = () => {
     navigate('/login');
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault(); // Ngăn chặn form submit mặc định
+    navigate(`/search?name=${searchTerm}`); // Chuyển hướng đến trang kết quả tìm kiếm
+  };
   return (
     <header className="header">
          <div className="header-container">
@@ -33,8 +43,15 @@ const Header = () => {
       </div>
   
       <div className="search">
-        <input type="text" placeholder="Search......." />
-        <button>Search</button>
+        <form className='form' onSubmit={handleSearchSubmit}> {/* Thêm form để bắt sự kiện submit */}
+          <input 
+            type="text" 
+            placeholder="Search......." 
+            value={searchTerm}
+            onChange={handleSearchChange} 
+          />
+          <button type="submit">Search</button> {/* Thay đổi button thành type="submit" */}
+        </form>
       </div>
       
       <div className="user-actions">
@@ -68,18 +85,20 @@ const Header = () => {
                 <li className="nav-item">
                   <Link to="/" className="nav-link">Home</Link>
                 </li>
+
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Featured</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">filter event</a>
+                  <a className="nav-link" href="#">Contact</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">About</a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Contact</a>
-                </li>
+                {/* <li className="nav-item">
+                <a className="nav-link" href="#">Filter</a>
+                
+                </li> */}
+              <div className="filter-button">
+        <FilterModal /> {/* Hiển thị nút Filter */}
+      </div>
               </ul>
             </nav>
           </div>
