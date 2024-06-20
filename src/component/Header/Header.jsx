@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaShoppingCart } from 'react-icons/fa';
 import 'bootstrap/js/dist/dropdown';
 import logo from '../../assets/product/logo.png';
 import './Header.scss';
 import FilterModal from '../Header/Filter'
+import { logoutAction } from '../../redux/actions/UserAction/userActions';
 
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   // Sử dụng hook useSelector để lấy thông tin đăng nhập từ store Redux
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const currentUser = useSelector(state => state.user.currentUser);
+  const role = useSelector(state => state.user.role);
 
   // Tính tổng số lượng sản phẩm trong giỏ hàng
   const cartItems = useSelector(state => state.cart.items);
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   // Đăng xuất người dùng
-  const handleLogout = () => {
-    // Thực hiện các thao tác đăng xuất ở đây, ví dụ dispatch action logout hoặc xóa token, thông tin đăng nhập khỏi local storage, ...
-
-    // Sau khi đăng xuất, chuyển hướng về trang đăng nhập
-    navigate('/login');
+  const handleLogout = async() => {
+    await dispatch(logoutAction());
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
   };
 
   const handleSearchChange = (event) => {
@@ -44,19 +47,6 @@ const Header = () => {
       <div className="logo">
         <img src={logo} alt="Ticketbox" />
       </div>
-  
-      {/* {userType === 'Merchant' && ( */}
-          <div className="manage-event">
-            <Link to="/manage-event">
-              {/* ... (Logo "Create Event") */} manageevent
-            </Link>
-          </div>
-        {/* )} */}
-
-        <div className="admin-link">
-            <Link to="/admin">Admin</Link> 
-          </div>
-
       <div className="search">
         <form className='form' onSubmit={handleSearchSubmit}> {/* Thêm form để bắt sự kiện submit */}
           <input 
@@ -73,11 +63,15 @@ const Header = () => {
             {isLoggedIn ? (
               <div className="dropdown d-inline-block">
               <button className="btn btn-outline-light me-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Hello, {currentUser.fullname}
+                Hello, {currentUser.username}
               </button>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style={{ minWidth: '95%' }}>
-                <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
                 <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                {role === "USER MERCHANT" &&
+                  <li><Link className="dropdown-item" to="/manage-event">Dashboard</Link></li>
+                }
+                <li><hr class="dropdown-divider"/></li>
+                <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
               </ul>
             </div>
   ) : (

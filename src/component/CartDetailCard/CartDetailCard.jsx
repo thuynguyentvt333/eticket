@@ -24,7 +24,7 @@ const CartDetailCard = ({ item }) => {
     return (
         <>
             <div className="image-product">
-                {/* You might need to display an image from the cart item here */}
+                {/* might need to display an image from the cart item here */}
                 {/* Example: <img src={item.image} alt={item.name} /> */}
             </div>
             <div className="name-product">{item.eventName}</div> {/* Display the event name */}

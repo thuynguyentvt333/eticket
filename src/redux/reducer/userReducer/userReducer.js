@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { REGISTER_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, SERVER_ERROR } from '../../actions/UserAction/userActionTypes';
+import { REGISTER_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, SERVER_ERROR, LOGOUT_USER_SUCCESS } from '../../actions/UserAction/userActionTypes';
 
 // Trạng thái ban đầu
 const initialState = {
@@ -7,7 +7,8 @@ const initialState = {
     token: null,
     isLoggedIn: false,
     error: null,
-    roleId: null
+    username: null,
+    role: null
 };
 
 // Khởi tạo state từ localStorage (nếu có)
@@ -32,6 +33,8 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
                 currentUser: action.payload,
                 token: action.payload.token,
                 isLoggedIn: true,
+                role: action.payload.role,
+                username: action.payload.username,
                 error: null
             };
             // Lưu thông tin người dùng xuống localStorage
@@ -39,8 +42,22 @@ const userReducer = (state = initialStateFromLocalStorage || initialState, actio
             // Lưu token vào cookie
             Cookies.set('token', action.payload.token);
             return newState;
+        
+        case LOGOUT_USER_SUCCESS:
+            Cookies.remove('token');
+            localStorage.clear();
+            return {
+                ...state,
+                currentUser: null,
+                token: null,
+                isLoggedIn: false,
+                role: null,
+                error: null
+            };
 
         case LOGIN_USER_FAIL:
+        
+        
         case SERVER_ERROR:
             return {
                 ...state,

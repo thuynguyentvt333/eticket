@@ -9,21 +9,27 @@ import InforEvent from './component/InforEvent/InforEvent';
 
 const  App =()=> {
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-  const isAdmin = useSelector(state => state.user.currentUser?.group === 'admin');
+  const isAdmin = useSelector(state => state.user.role === 'ADMIN');
 
   return (
     <Router>
       <div>
         <Routes>
-          {/* <Route path="/admin/*" element={isLoggedIn && isAdmin ? <AdminRoutes /> : <Navigate to="/login" />} /> */}
-          <Route path="/admin/*" element={<AdminRoutes />} />
+          <Route path="/admin/*" element={isLoggedIn && isAdmin ? <AdminRoutes /> : <Navigate to="/login" />} />
           <Route path="/*" element={<PublicRoutes />} />
-   
         </Routes>
       </div>
-      <ToastContainer />
-   
-
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Router>
   );
 }

@@ -1,5 +1,6 @@
-import { REGISTER_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, SERVER_ERROR } from '../../actions/UserAction/userActionTypes';
+import { REGISTER_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, SERVER_ERROR, LOGOUT_USER_SUCCESS  } from '../../actions/UserAction/userActionTypes';
 import { loginUser } from '../../../services/userService';
+import Cookies from 'js-cookie';
 
 export const registerUser = (newUser) => {
     return async (dispatch) => {
@@ -33,3 +34,16 @@ export const loginUserAction = (email, password) => {
         }
     };
 };
+
+export const logoutAction = () => {
+    return async (dispatch) => {
+      const token = Cookies.get('token');
+      if (token) {
+        try {
+          dispatch({ type: LOGOUT_USER_SUCCESS });
+        } catch (error) {
+          dispatch({ type: SERVER_ERROR, payload: error.message });
+        }
+      }
+    };
+  };

@@ -14,7 +14,7 @@ const LoginPage = () => {
     const currentUser = useSelector(state => state.user.currentUser);  
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const errorMessage = useSelector(state => state.user.error);
-    const token = useSelector(state => state.user.token);
+    const role = useSelector(state => state.user.role);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,8 +25,9 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             await dispatch(loginUserAction(email, password));
-            setLoginCompleted(true); // Đánh dấu đã nhấn nút đăng nhập hay chưa
-
+            if (loginCompleted === false) {
+                setLoginCompleted(true);
+            }
         } catch (error) {
             // Xử lý lỗi nếu cần
             setError(error.message);
@@ -35,13 +36,21 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (loginCompleted && isLoggedIn) {
-            const redirectTo = location.state?.from?.pathname || '/';
-            navigate(redirectTo);
             toast.success("Login success!");
-        } else if (loginCompleted && errorMessage) {
-            toast.error(errorMessage);
+            if (role === "USER") {
+                navigate("/");
+            }
+            else if (role === "USER MERCHANT") {
+                navigate("/");
+            }
+            else if (role === "ADMIN") {
+                navigate("/admin");
+            }
+        } else if (loginCompleted){
+            toast.error("Username or password is incorrect!");
+            setLoginCompleted(false);
         }
-    }, [loginCompleted, isLoggedIn, currentUser, errorMessage, navigate, location]);
+    }, [loginCompleted]);
 
     return (
         <div className="container ">

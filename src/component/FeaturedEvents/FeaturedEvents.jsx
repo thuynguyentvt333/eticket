@@ -10,7 +10,7 @@ const FeaturedEvents = () => {
   const [events, setEvents] = useState([]);
   
   useEffect(() => {
-    axios.get('http://localhost:8080/home/event-paging?offset=0&size=10')
+    axios.get('http://localhost:8080/home/event')
       .then(response => {
         setEvents(response.data);
       })
