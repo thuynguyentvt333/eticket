@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useParams, useNavigate } from 'react-router-dom';
 import './AddEvent.scss';
+import { toast } from 'react-toastify';
 
-const AddEvent = () => {
+const AddEditEvent = () => {
+  const { id } = useParams();
   const token = Cookies.get('token');
   const [categories, setCategories] = useState([]);
   const [eventDetails, setEventDetails] = useState({
@@ -29,6 +32,13 @@ const AddEvent = () => {
   const [sessionId, setSessionId] = useState('');
 
   useEffect(() => {
+    if (id) {
+      toast.info("ĐANG MỞ CHỨC NĂNG UPDATE EVENT");
+    }
+    else {
+      toast.info("ĐANG MỞ CHỨC NĂNG Create EVENT");
+    }
+
     axios.get('http://localhost:8080/home/categories', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,7 +50,7 @@ const AddEvent = () => {
       .catch(error => {
         console.error('Error fetching categories:', error);
       });
-  }, [token]);
+  }, [token, id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -211,4 +221,4 @@ const AddEvent = () => {
   );
 };
 
-export default AddEvent;
+export default AddEditEvent;

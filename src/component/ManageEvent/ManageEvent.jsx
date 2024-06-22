@@ -4,8 +4,6 @@ import './ManageEvent.scss';
 import { useNavigate } from 'react-router-dom';
 
 const ManageEvent = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingEvent, setEditingEvent] = useState(null);
 
   const navigate = useNavigate();
 
@@ -21,7 +19,6 @@ const ManageEvent = () => {
       time: '20:00',
       information: 'Lorem ipsum dolor sit amet' 
     },
-    // ... Thêm dữ liệu sự kiện
   ];
 
   // Hàm xử lý khi bấm nút "Create New Event"
@@ -29,53 +26,21 @@ const ManageEvent = () => {
     navigate("/add-event");
   };
 
-  // Hàm xử lý khi bấm nút "Search"
-  const handleSearchEvent = () => {
-    // Thực hiện logic tìm kiếm sự kiện
-    console.log("Search Event");
-  };
 
   // Hàm xử lý khi bấm nút "Edit"
-  const handleEditEvent = (event) => {
-    setIsEditing(true);
-    setEditingEvent(event);
+  const handleEditEvent = (id) => {
+    navigate(`/edit-event/${id}`);
   };
 
-  // Hàm xử lý khi bấm nút "Save" trong bảng cập nhật
-  const handleSaveEvent = () => {
-    // Thực hiện logic lưu cập nhật sự kiện
-    console.log("Save Event:", editingEvent);
-    setIsEditing(false);
-    setEditingEvent(null);
-  };
-
-  // Hàm xử lý khi hủy cập nhật sự kiện
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-    setEditingEvent(null);
-  }
 
   return (
     <div className="manage-event-container">
       <h2>Manage Events</h2>
 
-      {/* Thống kê số lượng vé bán ra */}
-      <div className="statistics">
-        {/* ... Hiển thị thông tin thống kê */}
-      </div>
-
-      {/* Tìm kiếm sự kiện */}
-      <div className="search-bar">
-        <input type="text" placeholder="Search events..." />
-        <button onClick={handleSearchEvent}><FaSearch /></button>
-      </div>
-
-      {/* Nút tạo sự kiện mới */}
       <button className="create-button" onClick={handleCreateEvent}>
         <FaPlus /> Create New Event
       </button>
 
-      {/* Danh sách sự kiện */}
       <table>
         <thead>
           <tr>
@@ -102,36 +67,14 @@ const ManageEvent = () => {
               <td>{event.time}</td>
               <td>{event.information}</td>
               <td>
-                <button onClick={() => handleEditEvent(event)}>
+                <button onClick={() => handleEditEvent(event.id)}>
                   <FaPen />
                 </button>
-                {/* ... Nút "Delete" */} 
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {/* Modal/Popup cập nhật sự kiện */}
-      {isEditing && (
-        <div className="edit-modal">
-          <div className="modal-content">
-            <h3>Edit Event</h3>
-            {/* ... Các input fields cho Category, Event Information, Status, Time, Date */}
-            <input 
-              type="text" 
-              placeholder="Category" 
-              value={editingEvent.category}
-              onChange={(e) => setEditingEvent({...editingEvent, category: e.target.value})} 
-            />
-            {/* ... Các input fields khác */}
-            <div className="button-group">
-              <button onClick={handleSaveEvent}>Save</button>
-              <button onClick={handleCancelEdit}>Cancel</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
