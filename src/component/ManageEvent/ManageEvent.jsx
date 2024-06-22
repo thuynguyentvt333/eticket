@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { FaPlus, FaSearch, FaPen } from 'react-icons/fa';
 import './ManageEvent.scss';
+import { useNavigate } from 'react-router-dom';
 
 const ManageEvent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
+
+  const navigate = useNavigate();
 
   // Dữ liệu mẫu cho danh sách sự kiện (thay thế bằng dữ liệu thật từ API)
   const events = [
@@ -23,8 +26,7 @@ const ManageEvent = () => {
 
   // Hàm xử lý khi bấm nút "Create New Event"
   const handleCreateEvent = () => {
-    // Chuyển hướng đến trang tạo sự kiện hoặc hiển thị modal
-    console.log("Create New Event"); 
+    navigate("/add-event");
   };
 
   // Hàm xử lý khi bấm nút "Search"

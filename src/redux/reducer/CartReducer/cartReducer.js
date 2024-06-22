@@ -14,7 +14,8 @@ const cartReducer = (state = initialState, action) => {
 
     case 'DELETE_FROM_CART':
       return deleteFromCartReducer(state, action.payload);
-
+    case 'CLEAR_CART':
+      return clearCartReducer(state);
     default:
       return state;
   }
@@ -95,6 +96,13 @@ const deleteFromCartReducer = (state, productId) => {
   return {
     ...state,
     items: state.items.filter(item => item.id !== productId)
+  };
+};
+
+const clearCartReducer = (state) => {
+  return {
+    ...state,
+    items: []
   };
 };
 

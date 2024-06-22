@@ -1,0 +1,37 @@
+
+    .title-left,
+    .title-right {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .cart-items-container {
+        margin-bottom: 20px;
+    }
+
+    .summary {
+        .quantity-item,
+        .payment-methods,
+        .total-price {
+            margin-bottom: 10px;
+        }
+    }
+
+    .button-a {
+        padding: 10px 20px;
+       border-radius: 3px;
+        background-color: rgb(163, 241, 143);
+        color: #220b43;
+        cursor: pointer;
+        border-color:rgb(163, 241, 143); ;
+    }
+    .back-home-page{
+        background-color: rgb(163, 241, 143);
+        padding:8px;
+        border-radius: 5px;
+        text-decoration: none;
+        color:#220b43;
+        border-color: rgb(163, 241, 143);;
+    }
+

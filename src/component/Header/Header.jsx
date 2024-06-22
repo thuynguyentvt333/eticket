@@ -22,8 +22,14 @@ const Header = () => {
   const cartItems = useSelector(state => state.cart.items);
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(totalItems);
+}, [totalItems]);
+
   // Đăng xuất người dùng
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     await dispatch(logoutAction());
     if (!isLoggedIn) {
       navigate('/login');
@@ -65,9 +71,9 @@ const Header = () => {
               <button className="btn btn-outline-light me-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Hello, {currentUser.username}
               </button>
-              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style={{ minWidth: '95%' }}>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" >
                 <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                {role === "USER MERCHANT" &&
+                {role === "MERCHANT USER" &&
                   <li><Link className="dropdown-item" to="/manage-event">Dashboard</Link></li>
                 }
                 <li><hr class="dropdown-divider"/></li>
@@ -80,9 +86,9 @@ const Header = () => {
       <Link to="/register" className="btn btn-primary me-2">Sign Up</Link>
     </>
   )}
-  <Link to="/cart" className="btn btn-outline-light ">
+  <Link to="/cart" className="btn btn-outline-light icon-cart">
     <FaShoppingCart size={20} />
-    {totalItems > 0 && <span className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill">{totalItems}</span>}
+            {total > 0 && <span className='count-item-cart'>{total}</span>}
   </Link>
 </div>
 

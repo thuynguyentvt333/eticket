@@ -73,3 +73,17 @@ nav ul li a {
   // padding: 0px 0px;
 }
 
+.icon-cart {
+  &:hover {
+    span {
+      color: #0a0a0a;
+    }
+    
+  }
+}
+
+.count-item-cart {
+  color: white;
+  margin-left: 5px;
+}
+

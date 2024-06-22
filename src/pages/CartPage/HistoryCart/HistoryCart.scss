@@ -1,0 +1,46 @@
+.purchase-history {
+    /* ... Các thuộc tính CSS khác ... */
+  
+    .order-item {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px; 
+    }
+  
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  
+    .order-details {
+      h3 {
+        margin-bottom: 10px;
+      }
+    }
+  
+    .ticket-item {
+      display: flex;
+      align-items: center; 
+      margin-bottom: 10px; 
+    }
+  
+    .ticket-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-right: 15px;
+      border-radius: 4px; 
+    }
+  
+    .ticket-info {
+      /* ... Các thuộc tính CSS khác ... */
+    }
+  
+    .order-total {
+      display: flex;
+      justify-content: flex-end; 
+      font-weight: bold;
+    }
+  }

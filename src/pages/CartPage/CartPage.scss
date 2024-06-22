@@ -1,131 +1,29 @@
-.cart-container {
+.cart-page-container {
     display: flex;
-    width: 1000px;
-    min-height: 300px;
-    margin: 100px auto;
-    gap: 20px;
-
-    .content-left {
-        width: 70%;
-
-        .title-left {
-            font-size: 30px;
-            font-weight: 500;
-            margin-bottom: 50px;
+    
+    .sidebar {
+      width: 250px;
+      background-color: #f0f0f0;
+      padding: 20px;
+  
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: none;
+        background-color: transparent;
+        text-align: left;
+        cursor: pointer;
+  
+        &.active {
+          background-color: #e0e0e0;
         }
-
-        .cart-content {
-            min-height: 300px;
-
-            .cart-detail-card {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 10px 0;
-    
-                .image-product {
-                    width: 20%;
-                    img {
-                        width: 100px;
-                        height: 80px;
-                    }
-                }
-                
-                .name-product {
-                    width: 20%;
-                    font-size: 22px;
-                }
-    
-                .cart-detail-quanty {
-                    width: 20%;
-                    display: flex;
-                    gap: 15px;
-                    justify-content: center;
-                    align-items: center;
-    
-                    .icon-update-cart {
-                        font-size: 25px;
-                        cursor: pointer;
-                        &:hover {
-                            opacity: 0.7;
-                        }
-                    }
-    
-                    span {
-                        font-size: 22px;
-                    }
-                }
-    
-                .cart-detail-price {
-                    width: 30%;
-                    font-size: 22px;
-                }
-    
-                .icon-update-cart {
-                    font-size: 25px;
-                        cursor: pointer;
-                        &:hover {
-                            opacity: 0.7;
-                            color: red;
-                        }
-                }
-            }
-        }
-
-        .back-home-page {
-            text-decoration: none;
-        }
-
-        .icon-update-cart {
-            font-size: 25px;
-            cursor: pointer;
-            color: black;
-            &:hover {
-                opacity: 0.8;
-            }
-        }
+      }
     }
-
-    .content-right {
-        width: 30%;
-        background-color: #EAE8E8;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        padding: 0 30px;
-        padding-bottom: 30px;
-
-        .title-right {
-            font-size: 30px;
-            font-weight: 500;
-        }
-
-        .quantity-item {
-            font-size: 20px;
-            font-weight: 400;
-        }
-
-        .payment-methods {
-            font-size: 20px;
-            font-weight: 400;
-        }
-
-        .total-price {
-            font-size: 20px;
-            font-weight: 400;
-        }
-
-        button {
-            height: 45px;
-            width: 150px;
-            font-size: 20px;
-            font-weight: 400;
-            background-color: #332D2D;
-            color: white;
-
-            &:hover {
-                opacity: 0.8;
-            }
-        }
+  
+    .content {
+      flex: 1;
+      padding: 20px;
     }
-}
+  }

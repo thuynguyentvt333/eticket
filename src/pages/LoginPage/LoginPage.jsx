@@ -40,7 +40,7 @@ const LoginPage = () => {
             if (role === "USER") {
                 navigate("/");
             }
-            else if (role === "USER MERCHANT") {
+            else if (role === "MERCHANT USER") {
                 navigate("/");
             }
             else if (role === "ADMIN") {
@@ -61,7 +61,7 @@ const LoginPage = () => {
                             <h2 className="card-title text-center mb-4">Login</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">Email</label>
+                                    <label htmlFor="email" className="form-label">username</label>
                                     <input type="text" className="form-control" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                                 <div className="mb-3">

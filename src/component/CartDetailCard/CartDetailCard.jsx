@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addOneToCart, removeFromCart, deleteFromCart } from '../../redux/actions/CartActioin/cartActions';
 import { FaPlus, FaMinus, FaTrashAlt } from 'react-icons/fa';
+import './CartDetailCard.scss';
 
 const CartDetailCard = ({ item }) => {
     const dispatch = useDispatch();

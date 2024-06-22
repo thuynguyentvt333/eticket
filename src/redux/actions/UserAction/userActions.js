@@ -37,13 +37,10 @@ export const loginUserAction = (email, password) => {
 
 export const logoutAction = () => {
     return async (dispatch) => {
-      const token = Cookies.get('token');
-      if (token) {
         try {
-          dispatch({ type: LOGOUT_USER_SUCCESS });
+            dispatch({ type: LOGOUT_USER_SUCCESS });
         } catch (error) {
-          dispatch({ type: SERVER_ERROR, payload: error.message });
+            dispatch({ type: SERVER_ERROR, payload: error.message });
         }
-      }
     };
   };

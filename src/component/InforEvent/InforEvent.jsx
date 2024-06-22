@@ -6,6 +6,7 @@ import { Card, Button, Row, Col, Typography, Divider, Space, Modal, Radio } from
 import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons';
 import './InforEvent.css'; 
 import { addToCart } from '../../redux/actions/CartActioin/cartActions';
+import { toast } from 'react-toastify';
 
 const InforEvent = () => {
   const { id } = useParams();
@@ -49,7 +50,18 @@ const InforEvent = () => {
     setSelectedTicketType(e.target.value);
   };
 
+  const validateForm = () => {
+    if (!selectedTicketType || !quantity) {
+      toast.error(' chọn loại vé nữa!');
+      return false;
+    }
+    return true;
+  };
+
   const handlePlaceOrder = () => {
+    if (!validateForm()) {
+      return;
+    }
     if (isLoggedIn) {
       // Find the selected ticket based on type
       const selectedTicket = event.createTicketsResponseList.find(
@@ -59,7 +71,7 @@ const InforEvent = () => {
       if (selectedTicket) {
         // Add selected ticket to cart with quantity
         dispatch(addToCart({ ...selectedTicket, eventName: event.name, quantity }));
-        // navigate('/cart');
+        toast.success(" vừa thêm vé thành công, mau vào giỏ hàng thanh toán ")
       } else {
         // Handle case where no ticket type is selected
         console.error("Ticket type not selected"); 

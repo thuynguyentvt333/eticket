@@ -1,15 +1,19 @@
 import React from 'react';
-import FeaturedEvents from '../../component/FeaturedEvents/FeaturedEvents.jsx';
-import SpecialEvents from '../../component/SpecialEvents/SpecialEvents.jsx';
+// import Advertise from '../../component/Advertise/Advertise';
+// import CategoEvent from '../../component/CategoEvents/CategoEvent';
+// import EventFilter from '../../component/EventFilter/EventFilter';
+import FeaturedEvents from '../../component/FeaturedEvents/FeaturedEvents';
 
 const HomePage = () => {
-  
-
   return (
-   <div style={{ backgroundColor: '#252825', color: 'white' }}>
-  <FeaturedEvents/>
-  <SpecialEvents/>
-  </div>
+    <div>
+      {/* <Advertise /> */}
+      {/* <CategoEvent category="music" />
+      <CategoEvent category="hoithao" />
+      <CategoEvent category="san-khau" /> */}
+      <FeaturedEvents/>
+      {/* <EventFilter/> */}
+    </div>
   );
 };
 
