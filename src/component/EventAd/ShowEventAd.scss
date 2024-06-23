@@ -1,0 +1,47 @@
+.app-container {
+    display: flex;
+  }
+  
+  .menu-left {
+    display: flex;
+    flex-direction: column;
+    background-color: #e0f0ff;
+    padding: 10px;
+  }
+  
+  .menu-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #c8e6ff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .content {
+    margin-left: 20px;
+    flex: 1;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .search-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ccc;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
