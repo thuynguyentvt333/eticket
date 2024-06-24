@@ -87,7 +87,7 @@ const InforEvent = () => {
   }
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div className='info' style={{ padding: '24px' }}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <div className="event-details">

@@ -15,13 +15,13 @@
     width: 100%;
     height: 40px;
     font-size: 18px;
-    background-color: #00b96b;
-    border-color: #00b96b;
+    background-color: #3f982fc3;
+    border-color: #3f982fa7;
   }
   
   .ant-btn-primary:hover {
-    background-color: #00a364;
-    border-color: #00a364;
+    background-color: #3f982fa1;
+    border-color: #3f982fa9;
   }
   /* .baner1{
     background-color: rgb(29, 28, 28);
@@ -29,3 +29,6 @@
    /* .row1{
     background-color: rgb(29, 28, 28);
    } */
+    .info{
+      background-color:#66a5ad5e;
+    }

@@ -1,37 +1,48 @@
-import React, { useState } from 'react';
-import { FaPlus, FaSearch, FaPen } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaPlus, FaPen } from 'react-icons/fa';
 import './ManageEvent.scss';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const ManageEvent = () => {
-
   const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
 
-  // Dữ liệu mẫu cho danh sách sự kiện (thay thế bằng dữ liệu thật từ API)
-  const events = [
-    { 
-      id: 1, 
-      name: 'Concert A', 
-      category: 'Music', 
-      status: 'Upcoming', 
-      ticketsSold: 120,
-      date: '2024-03-10',
-      time: '20:00',
-      information: 'Lorem ipsum dolor sit amet' 
-    },
-  ];
+  const token = Cookies.get('token');
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/merchant/statistics',
+          {
+            headers: {
+              'Authorization': `Bearer ${token}` // Thêm token vào header Authorization
+            }
+          }
+        );
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        if (response.status === 401) {
+          console.error('Unauthorized: Token might be invalid or expired');
+        }
+        const data = await response.json();
+        setEvents(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Xử lý lỗi (ví dụ: hiển thị thông báo lỗi)
+      }
+    };
 
-  // Hàm xử lý khi bấm nút "Create New Event"
+    fetchEvents();
+  }, []);
+
   const handleCreateEvent = () => {
     navigate("/add-event");
   };
 
-
-  // Hàm xử lý khi bấm nút "Edit"
-  const handleEditEvent = (id) => {
+  const handleEditEvent = async (id) => {
     navigate(`/edit-event/${id}`);
   };
-
 
   return (
     <div className="manage-event-container">
@@ -48,26 +59,24 @@ const ManageEvent = () => {
             <th>Name</th>
             <th>Category</th>
             <th>Status</th>
-            <th>Tickets Sold</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Information</th>
+            <th>Total Tickets</th>
+            <th>Sold Tickets</th>
+            <th>Total Revenue</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {events.map((event) => (
-            <tr key={event.id}>
-              <td>{event.id}</td>
-              <td>{event.name}</td>
-              <td>{event.category}</td>
+            <tr key={event.eventId}>
+              <td>{event.eventId}</td>
+              <td>{event.eventName}</td>
+              <td>{event.categories}</td>
               <td>{event.status}</td>
-              <td>{event.ticketsSold}</td>
-              <td>{event.date}</td>
-              <td>{event.time}</td>
-              <td>{event.information}</td>
+              <td>{event.totalTicket}</td>
+              <td>{event.soldTicket}</td>
+              <td>{event.totalRevenue}</td>
               <td>
-                <button onClick={() => handleEditEvent(event.id)}>
+                <button onClick={() => handleEditEvent(event.eventId)}>
                   <FaPen />
                 </button>
               </td>

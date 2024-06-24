@@ -1,10 +1,10 @@
 import React from 'react';
-
+import './Foot.scss';
 const Footer = () => {
   return (
-    <footer className="bg-dark text-light py-3">
+    <footer style={{backgroundColor:'#07575bf9'}} className=" text-light py-3">
       <div className="container" >
-        <div className="row" style={{width:'100%' , height:'100%' }}>
+        <div style={{ backgroundColor: '#07575bf9', width: '100%', height: '100%' }} className="row" >
           <div className="col-md-6">
             <h5>About Us</h5>
             <p>We are a leading online retailer for hight.</p>
@@ -12,9 +12,9 @@ const Footer = () => {
           <div className="col-md-3">
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Products</a></li>
-              <li><a href="#">Contact</a></li>
+              <li className="nav-item"><a  className="vip " href="#">Home</a></li>
+              <li className="nav-item"><a  className="vip " href="#">Contact</a></li>
+              <li className="nav-item"><a  className="vip " href="#">About</a></li>
             </ul>
           </div>
           <div className="col-md-3">

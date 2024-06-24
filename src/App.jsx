@@ -6,7 +6,7 @@ import AdminRoutes from './routes/AdminRoutes';
 import PublicRoutes from './routes/PublicRoutes';
 import { useSelector } from 'react-redux';
 import InforEvent from './component/InforEvent/InforEvent';
-
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 const  App =()=> {
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const isAdmin = useSelector(state => state.user.role === 'ADMIN');

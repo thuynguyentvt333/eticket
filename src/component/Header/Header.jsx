@@ -5,7 +5,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import 'bootstrap/js/dist/dropdown';
 import logo from '../../assets/product/logo.png';
 import './Header.scss';
-import FilterModal from '../Header/Filter'
+// import FilterModal from '../Header/Filter'
 import { logoutAction } from '../../redux/actions/UserAction/userActions';
 
 
@@ -82,8 +82,8 @@ const Header = () => {
             </div>
   ) : (
     <>
-      <Link to="/login" className="btn btn-outline-light me-2">Login</Link>
-      <Link to="/register" className="btn btn-primary me-2">Sign Up</Link>
+      <Link to="/login" className="btn">Login</Link>
+      <Link to="/register" className="btn">Sign Up</Link>
     </>
   )}
   <Link to="/cart" className="btn btn-outline-light icon-cart">
@@ -98,22 +98,22 @@ const Header = () => {
             <nav>
               <ul className="nav justify-content-center">
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">Home</Link>
+                  <Link to="/" className="vip nav-item">Home</Link>
                 </li>
 
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Contact</a>
+              <li className="nav-item">
+              <Link to="/contact" className="vip nav-item">Contact</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">About</a>
+                <Link to="/about" className="vip nav-item">About</Link>
                 </li>
                 {/* <li className="nav-item">
                 <a className="nav-link" href="#">Filter</a>
                 
                 </li> */}
-              <div className="filter">
+              {/* <div className="filter">
         <FilterModal /> {/* Hiển thị nút Filter */}
-      </div>
+      {/* </div> */} 
               </ul>
             </nav>
           </div>

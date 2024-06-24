@@ -1,13 +1,12 @@
 .featured-events {
     margin-bottom: 40px;
     margin-left: 40px;
-    margin-right:40px ;
     // padding-top: 40px;
     display: flex;
     justify-content: center; /* Center the slider container */
     align-items: center;
     width: 98%;
-    
+   
   }
   
   .slick-prev, .slick-next {
@@ -54,20 +53,21 @@
   transform: translateY(-50%);
   z-index: 999;
   cursor: pointer;
-  background-color: transparent;
-  border: none;
+  background-color:#a1d6e279;
+  border:1px solid #A1D6E2;
+  border-radius: 2px;
   padding: 10px;
-  font-size: 33PX;
-  color: #333; /* Adjust color as needed */
+  font-size: 33px;
+  color: #07575B; /* Adjust color as needed */
 }
 
 .featured-events .custom-prev-arrow {
-  // left: 10px; /* Adjust left position as needed */
+  left: 5px; /* Adjust left position as needed */
   // margin-right: 10px;
 }
 
 .featured-events .custom-next-arrow {
-  right: 10px; /* Adjust right position as needed */
+  right: 2px; /* Adjust right position as needed */
 }
 
 // .featured-events .custom-prev-arrow::before {
@@ -80,5 +80,5 @@
   font-size: 2em;
   margin-left: 20px;
   font-weight: 600;
-  color:#1D1E4E;
+  
 }

@@ -10,7 +10,8 @@ import InforEvent from '../component/InforEvent/InforEvent';
 import SearchResults from '../component/Header/searchresult';
 import ManageEvent from '../component/ManageEvent/ManageEvent';
 import AddEditEvent from '../component/ManageEvent/AddEditEvent';
-
+import Contact from '../component/Contact/Contact';
+import About from '../component/About/About';
 const PublicRoutes = () => {
   return (
     <PublicLayout>
@@ -25,6 +26,8 @@ const PublicRoutes = () => {
         <Route path="/manage-event" element={<ManageEvent />} />
         <Route path="/add-event" element={<AddEditEvent />} />
         <Route path="/edit-event/:id" element={<AddEditEvent />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </PublicLayout>
   );

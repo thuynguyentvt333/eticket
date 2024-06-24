@@ -6,6 +6,7 @@ import './AddEvent.scss';
 import { toast } from 'react-toastify';
 
 const AddEditEvent = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const token = Cookies.get('token');
   const [categories, setCategories] = useState([]);
@@ -23,19 +24,17 @@ const AddEditEvent = () => {
     endTime: '',
     startBooking: '',
     endBooking: '',
-    ticketTypes: [
-      { typeName: '', price: '', quantity: '' },
-      { typeName: '', price: '', quantity: '' },
-    ],
+    ticketTypes: id ? [] : [{ typeName: '', price: '', quantity: '' }, { typeName: '', price: '', quantity: '' }],
   });
   const [step, setStep] = useState(1);
   const [sessionId, setSessionId] = useState('');
+  const [editedTicketIndices, setEditedTicketIndices] = useState([]);
 
   useEffect(() => {
     if (id) {
       toast.info("ĐANG MỞ CHỨC NĂNG UPDATE EVENT");
-    }
-    else {
+      fetchEventDetail(id);
+    } else {
       toast.info("ĐANG MỞ CHỨC NĂNG Create EVENT");
     }
 
@@ -52,6 +51,68 @@ const AddEditEvent = () => {
       });
   }, [token, id]);
 
+  const fetchEventDetail = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/merchant/update/first-step/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        withCredentials: true,
+      });
+
+      if (response.data.code === 1000) {
+        const eventData = response.data.result;
+        const sessionIdFromResponse = Cookies.get('JSESSIONID');
+        setSessionId(sessionIdFromResponse);
+
+        setEventDetails({
+          eventName: eventData.eventName,
+          eventDescription: eventData.eventDescription,
+          eventCity: eventData.eventCity,
+          eventLocation: eventData.eventLocation,
+          eventBanner: eventData.eventBanner,
+          categories: eventData.categoriesList.map(category => category.id), // Ensure this is an array of integers
+          eventLimit: eventData.eventMaxLimit,
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching event details:', error);
+    }
+  }
+
+  const fetchStep2Details = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/merchant/update/second-step/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Cookie': `JSESSIONID=${sessionId}`,
+        },
+        withCredentials: true,
+      });
+
+      if (response.data.code === 1000) {
+        const step2Data = response.data.result;
+
+        setTicketDetails({
+          startTime: new Date(step2Data.start_time).toISOString().substring(0, 16),
+          endTime: new Date(step2Data.end_time).toISOString().substring(0, 16),
+          startBooking: new Date(step2Data.start_booking).toISOString().substring(0, 16),
+          endBooking: new Date(step2Data.end_booking).toISOString().substring(0, 16),
+          ticketTypes: step2Data.createTickets.map(ticket => ({
+            id: ticket.id,
+            typeName: ticket.type_name,
+            price: ticket.price,
+            quantity: ticket.available
+          })),
+        });
+
+        setStep(2);
+      }
+    } catch (error) {
+      console.error('Error fetching step 2 details:', error);
+    }
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (step === 1) {
@@ -62,7 +123,7 @@ const AddEditEvent = () => {
   };
 
   const handleCategoryChange = (e) => {
-    const value = e.target.value;
+    const value = parseInt(e.target.value, 10);
     const isChecked = e.target.checked;
     setEventDetails(prevState => {
       const updatedCategories = isChecked
@@ -75,8 +136,13 @@ const AddEditEvent = () => {
   const handleTicketTypeChange = (index, e) => {
     const { name, value } = e.target;
     const newTicketTypes = [...ticketDetails.ticketTypes];
-    newTicketTypes[index][name] = value;
+    newTicketTypes[index] = { ...newTicketTypes[index], [name]: value };
+
     setTicketDetails({ ...ticketDetails, ticketTypes: newTicketTypes });
+
+    if (!editedTicketIndices.includes(index)) {
+      setEditedTicketIndices([...editedTicketIndices, index]);
+    }
   };
 
   const handleAddEventStep1 = (e) => {
@@ -91,25 +157,42 @@ const AddEditEvent = () => {
       eventLimit: eventDetails.eventLimit,
     };
 
-    console.log("Step 1 Data: ", step1Data); // Log để kiểm tra dữ liệu gửi lên
-
-    axios.post('http://localhost:8080/merchant/add-event', step1Data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // Đảm bảo rằng cookie được gửi kèm
-    })
-      .then(response => {
-        if (response.data.code === 1000) {
-          const sessionIdFromResponse = Cookies.get('JSESSIONID');
-          setSessionId(sessionIdFromResponse);
-          setStep(2);
-        }
+    if (id) {
+      axios.post(`http://localhost:8080/merchant/update/first-step/${id}`, step1Data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Cookie: `JSESSIONID=${sessionId}` // Gửi cookie JSESSIONID cho API cập nhật bước 1
+        },
+        withCredentials: true,
       })
-      .catch(error => {
-        console.error('Error creating event (Step 1):', error.response ? error.response.data : error.message);
-      });
+        .then(response => {
+          if (response.data.code === 1000) {
+            fetchStep2Details(id); // Gọi API lấy thông tin bước 2 sau khi hoàn thành bước 1
+          }
+        })
+        .catch(error => {
+          console.error('Error updating event (Step 1):', error.response ? error.response.data : error.message);
+        });
+    } else {
+      axios.post('http://localhost:8080/merchant/add-event', step1Data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      })
+        .then(response => {
+          if (response.data.code === 1000) {
+            const sessionIdFromResponse = Cookies.get('JSESSIONID');
+            setSessionId(sessionIdFromResponse);
+            setStep(2);
+          }
+        })
+        .catch(error => {
+          console.error('Error creating event (Step 1):', error.response ? error.response.data : error.message);
+        });
+    }
   };
 
   const handleAddEventStep2 = (e) => {
@@ -119,37 +202,44 @@ const AddEditEvent = () => {
       return date.toISOString().replace('T', ' ').substring(0, 19);
     };
 
+    const editedTickets = editedTicketIndices.map(index => ticketDetails.ticketTypes[index]);
+
     const step2Data = {
       start_time: formatDateTime(ticketDetails.startTime),
       end_time: formatDateTime(ticketDetails.endTime),
       start_booking: formatDateTime(ticketDetails.startBooking),
       end_booking: formatDateTime(ticketDetails.endBooking),
-      ticketTypeRequests: ticketDetails.ticketTypes,
+      ticketTypeRequests: editedTickets, // Chỉ gửi những ticket đã được chỉnh sửa
     };
 
     console.log("Step 2 Data: ", step2Data); // Log để kiểm tra dữ liệu gửi lên
 
-    axios.post('http://localhost:8080/merchant/add-event-ticket', step2Data, {
+    const url = id
+      ? `http://localhost:8080/merchant/update/second-step/${id}`
+      : 'http://localhost:8080/merchant/add-event-ticket';
+
+    axios.post(url, step2Data, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-        Cookie: `JSESSIONID=${sessionId}` // Gửi cookie JSESSIONID
+        Cookie: `JSESSIONID=${sessionId}` // Gửi cookie JSESSIONID cho API cập nhật bước 2
       },
       withCredentials: true, // Đảm bảo rằng cookie được gửi kèm
     })
       .then(response => {
         if (response.data.code === 1000) {
-          alert('Event added successfully. Please wait for approval.');
+          toast.success(`Event ${id ? 'updated' : 'added'} successfully. Please wait for approval.`);
+          navigate(`/manage-event`);
         }
       })
       .catch(error => {
-        console.error('Error creating event (Step 2):', error.response ? error.response.data : error.message);
+        console.error(`Error ${id ? 'updating' : 'creating'} event (Step 2):`, error.response ? error.response.data : error.message);
       });
   };
 
   return (
     <div className="add-event-container">
-      <h2>Create New Event</h2>
+      <h2>{id ? 'Edit Event' : 'Create New Event'}</h2>
       {step === 1 && (
         <form onSubmit={handleAddEventStep1}>
           <div>
@@ -179,7 +269,9 @@ const AddEditEvent = () => {
                 <input
                   type="checkbox"
                   value={category.id}
-                  onChange={handleCategoryChange}
+                  checked={eventDetails.categories.includes(category.id)}
+                  onChange={id ? null : handleCategoryChange}
+                  readOnly={!!id}
                 />
                 <label>{category.category_name}</label>
               </div>
@@ -209,12 +301,36 @@ const AddEditEvent = () => {
           {ticketDetails.ticketTypes.map((ticket, index) => (
             <div key={index}>
               <label>Ticket Type {index + 1}</label>
-              <input type="text" name="typeName" placeholder="Type Name" value={ticket.typeName} onChange={(e) => handleTicketTypeChange(index, e)} required />
-              <input type="number" name="price" placeholder="Price" value={ticket.price} onChange={(e) => handleTicketTypeChange(index, e)} required />
-              <input type="number" name="quantity" placeholder="Quantity" value={ticket.quantity} onChange={(e) => handleTicketTypeChange(index, e)} required />
+              <input
+                type="text"
+                name="typeName"
+                placeholder="Type Name"
+                value={ticket.typeName}
+                onChange={id ? null : (e) => handleTicketTypeChange(index, e)} 
+                required
+                readOnly={!!id} 
+              />
+              <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                value={ticket.price}
+                onChange={id ? null : (e) => handleTicketTypeChange(index, e)} 
+                required
+                readOnly={!!id} 
+              />
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
+                value={ticket.quantity}
+                onChange={id ? null : (e) => handleTicketTypeChange(index, e)} 
+                required
+                readOnly={!!id} 
+              />
             </div>
           ))}
-          <button type="submit">Create Event</button>
+          <button type="submit">{id ? 'Update Event' : 'Create Event'}</button>
         </form>
       )}
     </div>

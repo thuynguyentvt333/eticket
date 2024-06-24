@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import automechanika from '../../assets/product/automechanika.png'; // Add your event images to the src folder
 import onlyFriends from '../../assets/product/only_friends.png';
-import './FeaturedEvents.scss';
+import './Stage.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css'; // Import Slick carousel styles
 import 'slick-carousel/slick/slick-theme.css'; // Import theme styles (optional)
@@ -10,7 +10,7 @@ import HotEvent from '../../component/HotEvent/HotEvent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft,faChevronRight  } from '@fortawesome/free-solid-svg-icons';
 
-const FeaturedEvents = () => {
+const Stage = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const FeaturedEvents = () => {
 
   return (
     <div>
-      <div className='text-a'> Music </div>
+      <div className='text-a'> Stage </div>
     <section className="featured-events">
       <Slider {...settings}>
         {events.map(event => (
@@ -66,4 +66,4 @@ const CustomNextArrow = ({ onClick }) => (
 </button>
 );
 
-export default FeaturedEvents;
+export default Stage;
