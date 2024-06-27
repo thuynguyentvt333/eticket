@@ -103,7 +103,7 @@ const InforEvent = () => {
             />
           </div>
           <Button type="primary" style={{ marginTop: '16px' }} size="small" onClick={handleOpenModal}> 
-            Book now
+            Thêm vào giỏ hàng
           </Button>
         </Col>
         <Col span={12}>
@@ -162,7 +162,7 @@ const InforEvent = () => {
                 <CalendarOutlined /> {new Date(event.start_time).toLocaleTimeString('vi-VN')} - {new Date(event.end_time).toLocaleTimeString('vi-VN')}, {new Date(event.start_time).toLocaleDateString('vi-VN')}
               </p>
               <Button type="primary" style={{ marginTop: '16px' }} size="small" onClick={() => handleOpenModal(event.createTicketsResponseList[0])}>
-                Book now
+                Thêm vào giỏ hàng
               </Button>
             </div>
             {event.createTicketsResponseList.map(ticket => (

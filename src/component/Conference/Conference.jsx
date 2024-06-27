@@ -35,7 +35,7 @@ const Conference = () => {
 
   return (
     <div>
-      <div className='text-a'> Conference </div>
+      <div className='text-a'> Hội Nghị </div>
     <section className="featured-events">
       <Slider {...settings}>
         {events.map(event => (

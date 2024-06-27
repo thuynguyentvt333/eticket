@@ -35,7 +35,7 @@ const FeaturedEvents = () => {
 
   return (
     <div>
-      <div className='text-a'> Music </div>
+      <div className='text-a'> Ca Nhạc </div>
     <section className="featured-events">
       <Slider {...settings}>
         {events.map(event => (

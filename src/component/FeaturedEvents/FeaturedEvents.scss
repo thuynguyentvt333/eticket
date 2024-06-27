@@ -1,13 +1,12 @@
 .featured-events {
     margin-bottom: 40px;
-    margin-left: 40px;
-    margin-right:40px ;
-    // padding-top: 40px;
+    // margin-left: 60px !important;
+    // margin-right: 60px !important;
+    padding: 0 100px;
     display: flex;
     justify-content: center; /* Center the slider container */
     align-items: center;
-    width: 98%;
-    
+    width: 100%;
   }
   
   .slick-prev, .slick-next {
@@ -81,4 +80,6 @@
   margin-left: 20px;
   font-weight: 600;
   color:#1D1E4E;
+  padding-left: 130px;
+  text-align: left;
 }

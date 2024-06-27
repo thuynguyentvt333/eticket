@@ -35,7 +35,7 @@ const Stage = () => {
 
   return (
     <div>
-      <div className='text-a'> Stage </div>
+      <div className='text-a'> Sân Khấu </div>
     <section className="featured-events">
       <Slider {...settings}>
         {events.map(event => (

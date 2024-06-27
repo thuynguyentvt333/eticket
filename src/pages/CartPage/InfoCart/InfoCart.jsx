@@ -2,12 +2,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
+import {  useNavigate } from 'react-router-dom';
 
 // import CartDetailCard from '../../component/CartDetailCard/CartDetailCard';
 import CartDetailCard from '../../../component/CartDetailCard/CartDetailCard';
 import './InfoCart.scss'; 
 
 const InfoCart = ({ cartItems, totalItems, totalPrice, onOrder }) => {
+  const navigate = useNavigate();
+  
+
+  const onPayment = () => {
+    navigate('/checkout');
+  }
+
   return (
     <>
       <div className="content-left">
@@ -36,7 +44,8 @@ const InfoCart = ({ cartItems, totalItems, totalPrice, onOrder }) => {
         <div className="quantity-item">{totalItems} Item</div>
         <div className="payment-methods">Phương thức thanh toán</div>
         <div className="total-price">Tổng tiền: {totalPrice} VNĐ</div>
-        <button className='button-a' onClick={onOrder}>Đặt hàng</button>
+        <button className='button-a' onClick={onOrder}>Lưu Thông Tin Vào GIỏ Hàng</button>
+        <button className='button-a' onClick={onPayment}>Thanhoán</button>
       </div>
     </>
   );

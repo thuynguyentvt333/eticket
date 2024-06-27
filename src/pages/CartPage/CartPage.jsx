@@ -22,10 +22,10 @@ const CartPage = () => {
 
   const handleOrder = async () => {
     console.log('check: ', cartItems);
-    if (!cartItems || cartItems.length === 0) {
-      toast.info('Giỏ hàng trống');
-      return;
-    }
+    // if (!cartItems || cartItems.length === 0) {
+    //   toast.info('Giỏ hàng trống');
+    //   return;
+    // }
 
     const apiPayload = cartItems.map((item) => ({
       createTicketId: item.id,

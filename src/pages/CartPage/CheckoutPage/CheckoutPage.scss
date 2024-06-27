@@ -1,0 +1,40 @@
+
+.title-left,
+.title-right {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.cart-items-container {
+    margin-bottom: 20px;
+}
+
+.summary {
+    .quantity-item,
+    .payment-methods,
+    .total-price {
+        margin-bottom: 10px;
+    }
+}
+
+.button-a {
+    padding: 10px 20px;
+   border-radius: 3px;
+    background-color: #003c46dc;
+    color: #ffffff;
+    cursor: pointer;
+    border-color:#003c46dc ;
+}
+.back-home-page{
+    background-color: #003c46c9;
+    padding:8px;
+    border-radius: 5px;
+    text-decoration: none;
+    color:#ffffff;
+    border-color: #003c46dc;;
+}
+
+// .content-left{
+//     background-color: #66a5ad5e;
+// }

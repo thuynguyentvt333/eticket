@@ -12,6 +12,8 @@ import ManageEvent from '../component/ManageEvent/ManageEvent';
 import AddEditEvent from '../component/ManageEvent/AddEditEvent';
 import Contact from '../component/Contact/Contact';
 import About from '../component/About/About';
+import CheckoutPage from '../pages/CartPage/CheckoutPage/CheckoutPage';
+
 const PublicRoutes = () => {
   return (
     <PublicLayout>
@@ -28,6 +30,7 @@ const PublicRoutes = () => {
         <Route path="/edit-event/:id" element={<AddEditEvent />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/checkout" element={<CheckoutPage/>} />
       </Routes>
     </PublicLayout>
   );
