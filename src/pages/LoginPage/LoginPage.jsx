@@ -37,11 +37,13 @@ const LoginPage = () => {
     useEffect(() => {
         if (loginCompleted && isLoggedIn) {
             toast.success("Login success!");
+            const from = location.state?.from || '/';
             if (role === "USER") {
-                navigate("/");
+
+                navigate(from, { replace: true });
             }
             else if (role === "MERCHANT USER") {
-                navigate("/");
+                navigate(from, { replace: true });
             }
             else if (role === "ADMIN") {
                 navigate("/admin");

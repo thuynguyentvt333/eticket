@@ -1,6 +1,4 @@
-// CheckoutPage.js
 import React, { useState, useEffect } from 'react';
-import CartDetailCard from '../../../component/CartDetailCard/CartDetailCard';
 import './CheckoutPage.scss';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -8,8 +6,7 @@ import Cookies from 'js-cookie';
 const CheckoutPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [email, setEmail] = useState('');
-    const token = Cookies.get('token');
-    const [paymentStatus, setPaymentStatus] = useState(null); // Add payment status state
+  const token = Cookies.get('token');
 
   useEffect(() => {
     // Fetch cart items from API with token
@@ -25,15 +22,13 @@ const CheckoutPage = () => {
     .catch(error => {
       console.error('There was an error fetching the cart items!', error);
     });
-      
-      
   }, [token]);
 
   const handlePayment = () => {
     const cartIds = cartItems.map(item => item.cartId);
     const data = {
       cartId: cartIds,
-      method: 1,
+      method: 1, 
       email: email
     };
 
@@ -46,7 +41,7 @@ const CheckoutPage = () => {
     })
     .then(response => {
       if (response.data && response.data.result) {
-        window.location.href = response.data.result; // Redirect to the payment URL
+        window.open(response.data.result, '_blank');
       } else {
         alert('Payment request was successful, but no URL was returned.');
       }
@@ -58,18 +53,35 @@ const CheckoutPage = () => {
 
   return (
     <div className="checkout-page">
-      <h1>Thanh Toán</h1>
-      {cartItems.map((item, index) => (
-        <CartDetailCard key={index} item={item} />
-      ))}
+      <h2>Thanh Toán</h2>
+      <div className="cart-items-container">
+        {cartItems.map((item, index) => (
+          <div key={index} className="cart-item">
+            <div className="item-details">
+              <div className="item-name">{item.eventName}</div>
+              <div className="item-type">{item.type_name}</div>
+              <div className="item-quantity">Số lượng: {item.quantity}</div> 
+              <div className="item-price">{item.price * item.quantity} VNĐ</div> 
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <hr/>
+
       <div className="payment-section">
-        <input 
-          type="email" 
-          placeholder="Nhập email của bạn" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-        />
-        <button onClick={handlePayment}>Thanh Toán</button>
+        <h3>Thông Tin Thanh Toán</h3>
+        <div className="email-input">
+          <label htmlFor="email">Email:</label>
+          <input 
+            type="email" 
+            id="email" 
+            placeholder="Nhập email của bạn" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+          />
+        </div>
+        <button onClick={handlePayment} className="payment-button">Thanh Toán</button>
       </div>
     </div>
   );

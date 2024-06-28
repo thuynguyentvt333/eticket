@@ -3,13 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaArrowLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-// import CartDetailCard from '../../component/CartDetailCard/CartDetailCard';
+
 import './CartPage.scss';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { clearCart } from '../../redux/actions/CartActioin/cartActions';
-// import HistoryCart from './HistoryCart'
-// import InfoCart from './InfoCart'; 
+
 import HistoryCart from './HistoryCart/HistoryCart';
 import InfoCart from './InfoCart/InfoCart';
 const CartPage = () => {
@@ -22,10 +21,7 @@ const CartPage = () => {
 
   const handleOrder = async () => {
     console.log('check: ', cartItems);
-    // if (!cartItems || cartItems.length === 0) {
-    //   toast.info('Giỏ hàng trống');
-    //   return;
-    // }
+  
 
     const apiPayload = cartItems.map((item) => ({
       createTicketId: item.id,
@@ -43,12 +39,12 @@ const CartPage = () => {
       if (response.status === 200) {
         toast.success('Đặt hàng thành công');
         dispatch(clearCart());
-        navigate('/home');
+        navigate('/cart');
       } else {
         toast.error('Đặt hàng thất bại');
       }
     } catch (error) {
-      toast.error('Có lỗi xảy ra khi đặt hàng');
+      toast.error('Có lỗi xảy ra');
       console.error('Order error: ', error);
     }
   };

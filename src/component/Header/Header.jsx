@@ -8,7 +8,6 @@ import './Header.scss';
 // import FilterModal from '../Header/Filter'
 import { logoutAction } from '../../redux/actions/UserAction/userActions';
 
-
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,14 +25,12 @@ const Header = () => {
 
   useEffect(() => {
     setTotal(totalItems);
-}, [totalItems]);
+  }, [totalItems]);
 
   // Đăng xuất người dùng
   const handleLogout = async () => {
     await dispatch(logoutAction());
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
+    navigate('/'); // Chuyển hướng đến trang home sau khi đăng xuất
   };
 
   const handleSearchChange = (event) => {
@@ -49,25 +46,25 @@ const Header = () => {
   // const userType = useSelector(state => state.user.currentUser.userType); // Giả sử lưu thông tin userRole trong Redux store
   return (
     <header className="header">
-         <div className="header-container">
-      <div className="logo">
-        <img src={logo} alt="Ticketbox" />
-      </div>
-      <div className="search">
-        <form className='form' onSubmit={handleSearchSubmit}> {/* Thêm form để bắt sự kiện submit */}
-          <input 
-            type="text" 
-            placeholder="Search......." 
-            value={searchTerm}
-            onChange={handleSearchChange} 
-          />
-          <button type="submit">Search</button> {/* Thay đổi button thành type="submit" */}
-        </form>
-      </div>
-      
-      <div className="user-actions">
-            {isLoggedIn ? (
-              <div className="dropdown d-inline-block">
+      <div className="header-container">
+        <div className="logo">
+          <img src={logo} alt="Ticketbox" />
+        </div>
+        <div className="search">
+          <form className='form' onSubmit={handleSearchSubmit}> {/* Thêm form để bắt sự kiện submit */}
+            <input 
+              type="text" 
+              placeholder="Search......." 
+              value={searchTerm}
+              onChange={handleSearchChange} 
+            />
+            <button type="submit">Search</button> {/* Thay đổi button thành type="submit" */}
+          </form>
+        </div>
+        
+        <div className="user-actions">
+          {isLoggedIn ? (
+            <div className="dropdown d-inline-block">
               <button className="btn btn-outline-light me-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Hello, {currentUser.username}
               </button>
@@ -76,51 +73,47 @@ const Header = () => {
                 {role === "MERCHANT USER" &&
                   <li><Link className="dropdown-item" to="/manage-event">Dashboard</Link></li>
                 }
-                <li><hr class="dropdown-divider"/></li>
+                <li><hr className="dropdown-divider"/></li>
                 <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
               </ul>
             </div>
-  ) : (
-    <>
-      <Link to="/login" className="btn">Login</Link>
-      <Link to="/register" className="btn">Sign Up</Link>
-    </>
-  )}
-  <Link to="/cart" className="btn btn-outline-light icon-cart">
-    <FaShoppingCart size={20} />
+          ) : (
+            <>
+              <Link to="/login" className="btn">Login</Link>
+              <Link to="/register" className="btn">Sign Up</Link>
+            </>
+          )}
+          <Link to="/cart" className="btn btn-outline-light icon-cart">
+            <FaShoppingCart size={20} />
             {total > 0 && <span className='count-item-cart'>{total}</span>}
-  </Link>
-</div>
-
+          </Link>
+        </div>
       </div>
       <div className="row">
-          <div className="col">
-            <nav>
-              <ul className="nav justify-content-center">
-                <li className="nav-item">
-                  <Link to="/" className="vip nav-item">Home</Link>
-                </li>
-
+        <div className="col">
+          <nav>
+            <ul className="nav justify-content-center">
               <li className="nav-item">
-              <Link to="/contact" className="vip nav-item">Contact</Link>
-                </li>
-                <li className="nav-item">
+                <Link to="/" className="vip nav-item">Home</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/contact" className="vip nav-item">Contact</Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/about" className="vip nav-item">About</Link>
-                </li>
-                {/* <li className="nav-item">
+              </li>
+              {/* <li className="nav-item">
                 <a className="nav-link" href="#">Filter</a>
-                
-                </li> */}
+              </li> */}
               {/* <div className="filter">
-        <FilterModal /> {/* Hiển thị nút Filter */}
-      {/* </div> */} 
-              </ul>
-            </nav>
-          </div>
+                <FilterModal /> {/* Hiển thị nút Filter */}
+              {/* </div> */}
+            </ul>
+          </nav>
         </div>
-
+      </div>
     </header>
-  )
+  );
 };
 
 export default Header;

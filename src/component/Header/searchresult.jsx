@@ -41,7 +41,7 @@ const SearchResults = () => {
                 </p>
                 {/* Hiển thị thêm thông tin sự kiện */}
                 <button onClick={() => handleViewDetail(event.id)} className="view-detail-btn">
-                  View Detail
+                  Xem chi tiết
                 </button>
               </div>
             </li>

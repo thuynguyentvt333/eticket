@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import {  useNavigate } from 'react-router-dom';
 
-// import CartDetailCard from '../../component/CartDetailCard/CartDetailCard';
+
 import CartDetailCard from '../../../component/CartDetailCard/CartDetailCard';
 import './InfoCart.scss'; 
 
@@ -19,7 +19,7 @@ const InfoCart = ({ cartItems, totalItems, totalPrice, onOrder }) => {
   return (
     <>
       <div className="content-left">
-        <div className="title-left">Shopping Cart</div>
+        <div className="title-left">Giỏ Hàng </div>
         <hr />
         <div className="cart-items-container">
           {cartItems && cartItems.length > 0 ? (
@@ -39,13 +39,13 @@ const InfoCart = ({ cartItems, totalItems, totalPrice, onOrder }) => {
       </div>
           <div className="content-right">
               <hr />
-        <div className="title-right">Summary</div>
+        <div className="title-right">Tổng giá tiền</div>
         <hr />
         <div className="quantity-item">{totalItems} Item</div>
-        <div className="payment-methods">Phương thức thanh toán</div>
+        <div className="payment-methods">Phương thức thanh toán VNPay </div>
         <div className="total-price">Tổng tiền: {totalPrice} VNĐ</div>
-        <button className='button-a' onClick={onOrder}>Lưu Thông Tin Vào GIỏ Hàng</button>
-        <button className='button-a' onClick={onPayment}>Thanhoán</button>
+        <button className='button-a' onClick={onOrder}>Chốt số lượng vé trong giỏ hàng </button>
+        <button className='button-a' onClick={onPayment}>Thanh toán</button>
       </div>
     </>
   );

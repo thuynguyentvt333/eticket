@@ -31,7 +31,12 @@ const InforEvent = () => {
   }, [id]);
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    if (!isLoggedIn) {
+      // Redirect to login page and store current location
+      navigate('/login', { state: { from: location.pathname + location.search } });
+    } else {
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
@@ -52,7 +57,7 @@ const InforEvent = () => {
 
   const validateForm = () => {
     if (!selectedTicketType || !quantity) {
-      toast.error(' chọn loại vé nữa!');
+      toast.error('vui lòng chọn loại vé nữa!');
       return false;
     }
     return true;
@@ -74,11 +79,12 @@ const InforEvent = () => {
         toast.success(" vừa thêm vé thành công, mau vào giỏ hàng thanh toán ")
       } else {
         // Handle case where no ticket type is selected
-        console.error("Ticket type not selected"); 
+        console.error("Ticket type not selected");
       }
-    } else {
-      navigate('/login', { state: { from: location } });
     }
+    // } else {
+    //   navigate('/login', { state: { from: location } });
+    // }
     handleCloseModal(); 
   };
 

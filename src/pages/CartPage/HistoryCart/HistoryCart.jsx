@@ -1,32 +1,37 @@
 // HistoryCart.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import './HistoryCart.scss';
 
 const HistoryCart = () => {
-  // Dữ liệu ví dụ - bạn cần thay thế bằng dữ liệu thực tế từ API
-  const orderHistory = [
-    {
-      orderId: '123456',
-      paymentDate: '20/10/2023',
-      eventName: 'Sự kiện âm nhạc hoành tráng',
-      tickets: [
-        {
-          type: 'VIP',
-          price: '500.000 VNĐ',
-          quantity: 2,
-          imageUrl: 'https://i.pinimg.com/564x/9d/b1/c7/9db1c74134a95361ff0ad1c1e4414186.jpg', // Ảnh sự kiện
-        },
-        {
-          type: 'Thường',
-          price: '200.000 VNĐ',
-          quantity: 1,
-          imageUrl: 'https://i.pinimg.com/564x/9d/b1/c7/9db1c74134a95361ff0ad1c1e4414186.jpg', // Ảnh sự kiện (có thể khác nhau)
-        },
-      ],
-      total: '1.200.000 VNĐ', 
-    },
-    // ...Thêm dữ liệu cho các đơn hàng khác
-  ];
+  const [orderHistory, setOrderHistory] = useState([]);
+
+  useEffect(() => {
+    // Hàm gọi API để lấy dữ liệu lịch sử mua hàng
+    const fetchOrderHistory = async () => {
+      try {
+        const token = Cookies.get('token'); // Lấy token từ cookie
+        const response = await axios.get('http://localhost:8080/history', {
+          headers: {
+            Authorization: `Bearer ${token}` // Gửi token trong header
+          }
+        });
+        if (response.data.code === 1000) {
+          setOrderHistory(response.data.result);
+        }
+      } catch (error) {
+        console.error('Error fetching order history:', error);
+      }
+    };
+
+    // Gọi API khi component được mount lần đầu và định kỳ sau mỗi 5 phút
+    fetchOrderHistory();
+    const intervalId = setInterval(fetchOrderHistory, 300000); // 300000ms = 5 phút
+
+    // Dọn dẹp interval khi component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="purchase-history">
@@ -34,31 +39,20 @@ const HistoryCart = () => {
       <hr />
 
       {orderHistory.map((order) => (
-        <div key={order.orderId} className="order-item">
+        <div key={order.ticketId} className="order-item">
           <div className="order-header">
             <span className="order-date">Ngày thanh toán: {order.paymentDate}</span>
           </div>
 
           <div className="order-details">
             <h3>{order.eventName}</h3>
-            
-            {order.tickets.map((ticket, index) => (
-              <div key={index} className="ticket-item"> 
-                <img className="ticket-image" src={ticket.imageUrl} alt={order.eventName} />
-                <div className="ticket-info">
-                  <p>Loại vé: <strong>{ticket.type}</strong></p>
-                  <p>Giá: {ticket.price}</p>
-                  <p>Số lượng: {ticket.quantity}</p>
-                </div>
-              </div>
-            ))}
+            <p>Ngày diễn ra: {order.eventDate}</p>
+            <p>Thời gian bắt đầu: {order.eventStartTime}</p>
+            <p>Thời gian kết thúc: {order.eventEndTime}</p>
+            <p>Địa điểm: {order.location}</p>
           </div>
 
           <hr />
-          <div className="order-total">
-            <span>Tổng cộng:</span>
-            <span>{order.total}</span>
-          </div>
         </div>
       ))}
     </div>
