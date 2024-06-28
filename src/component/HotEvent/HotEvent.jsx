@@ -12,10 +12,10 @@ const HotEvent = ({ id, imgSrc, title, description }) => {
         <h2>{title}</h2>
         <p>{description}</p>
       </div>
-        <button>
-          <Link to={`/eventinfor/${id}`} style={{ textDecoration: 'none', color: 'white' }}>Chi Tiết</Link>
-        </button>
-      </div>
+      <button>
+        <Link to={`/eventinfor/${id}`} style={{ textDecoration: 'none', color: 'white' }}>Chi Tiết</Link>
+      </button>
+    </div>
   );
 };
 

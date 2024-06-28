@@ -8,6 +8,7 @@ import './Header.scss';
 // import FilterModal from '../Header/Filter'
 import { logoutAction } from '../../redux/actions/UserAction/userActions';
 
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

@@ -3,22 +3,13 @@ import React from 'react';
 // import CategoEvent from '../../component/CategoEvents/CategoEvent';
 // import EventFilter from '../../component/EventFilter/EventFilter';
 import FeaturedEvents from '../../component/FeaturedEvents/FeaturedEvents';
-import Conference from '../../component/Conference/Conference';
-import Stage from '../../component/Stage/Stage';
+
 const HomePage = () => {
   return (
     <div className='home'>
-      {/* <Advertise /> */}
-      {/* <CategoEvent category="music" />
-      <CategoEvent category="hoithao" />
-      <CategoEvent category="san-khau" /> */}
-
-      <FeaturedEvents />
-      <hr/>
-      <Conference />
-      <hr/>
-      <Stage />
-      {/* <EventFilter/> */}
+    <FeaturedEvents categoryId={7} title="Ca Nhạc" />
+      <FeaturedEvents categoryId={8} title="Hội Thảo" />
+      <FeaturedEvents categoryId={9} title="Triển Lãm" />
     </div>
   );
 };
