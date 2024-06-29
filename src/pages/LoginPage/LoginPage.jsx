@@ -25,6 +25,8 @@ const LoginPage = () => {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  // const [showChangePasswordPopup, setShowChangePasswordPopup] = useState(false);
+  // const [oldPassword, setOldPassword] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +40,36 @@ const LoginPage = () => {
     }
   };
 
+  // const handleChangePassword = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:8080/account/change-pasword', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       credentials: 'include', // Include cookies in the request
+  //       body: JSON.stringify({ 
+  //         oldPassword: oldPassword,
+  //         newPassword: newPassword 
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       toast.success(data.message);
+  //       setOldPassword('');
+  //       setNewPassword('');
+  //       setConfirmPassword('');
+  //       setShowChangePasswordPopup(false); 
+  //       // You might want to log the user out or navigate to the login page
+  //       // after successful password change
+  //     } else {
+  //       toast.error(data.message || 'Failed to change password');
+  //     }
+  //   } catch (error) {
+  //     toast.error('An error occurred');
+  //   }
+  // };
   const handleForgotPassword = async () => {
     try {
       const response = await fetch('http://localhost:8080/account/forgot_password', {
@@ -183,6 +215,11 @@ const LoginPage = () => {
               )}
             </div>
             <div className="card-footer text-center">
+            {/* <div>
+        <button onClick={() => setShowChangePasswordPopup(true)}>
+          Change Password?
+        </button>
+      </div> */}
               <div>
                 Don't have an account? <Link to="/register">Register here</Link>
               </div>
@@ -196,6 +233,38 @@ const LoginPage = () => {
         </div>
       </div>
 
+      {/* {showChangePasswordPopup && (
+    <div className="popup">
+      <div className="popup-content" style={{ backgroundColor: 'lightblue' }}>
+        <h2>Change Password</h2>
+        <input
+          type="password"
+          placeholder="Enter your old password"
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Enter your new password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Confirm your new password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <button onClick={handleChangePassword} disabled={newPassword !== confirmPassword}>
+          Change Password
+        </button>
+        <button onClick={() => setShowChangePasswordPopup(false)}>
+          Cancel
+        </button>
+      </div>
+    </div>
+      )} */}
+      
       {/* Forgot Password Popup */}
       {showForgotPasswordPopup && (
         <div className="popup">

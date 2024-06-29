@@ -8,8 +8,8 @@ const HomePage = () => {
   return (
     <div className='home'>
     <FeaturedEvents categoryId={7} title="Ca Nhạc" />
-      <FeaturedEvents categoryId={8} title="Hội Thảo" />
-      <FeaturedEvents categoryId={9} title="Triển Lãm" />
+      <FeaturedEvents categoryId={8} title="Sân Khấu Văn Hóa" />
+      <FeaturedEvents categoryId={9} title="Hội Thảo" />
     </div>
   );
 };

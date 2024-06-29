@@ -9,7 +9,6 @@ const CheckoutPage = () => {
   const token = Cookies.get('token');
 
   useEffect(() => {
-    // Fetch cart items from API with token
     axios.get('http://localhost:8080/my-cart', {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -28,7 +27,7 @@ const CheckoutPage = () => {
     const cartIds = cartItems.map(item => item.cartId);
     const data = {
       cartId: cartIds,
-      method: 1, 
+      method: 1,
       email: email
     };
 
@@ -41,7 +40,7 @@ const CheckoutPage = () => {
     })
     .then(response => {
       if (response.data && response.data.result) {
-        window.open(response.data.result, '_blank');
+        window.location.href = response.data.result;
       } else {
         alert('Payment request was successful, but no URL was returned.');
       }
@@ -50,6 +49,18 @@ const CheckoutPage = () => {
       console.error('There was an error processing the payment!', error);
     });
   };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const responseCode = urlParams.get('vnp_ResponseCode');
+
+    if (responseCode === '00') {
+      alert('Thanh toán thành công, ticket sẽ được gửi vào mail trong giây lát.');
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 3000); // Redirect to homepage after 3 seconds
+    }
+  }, []);
 
   return (
     <div className="checkout-page">
@@ -60,8 +71,8 @@ const CheckoutPage = () => {
             <div className="item-details">
               <div className="item-name">{item.eventName}</div>
               <div className="item-type">{item.type_name}</div>
-              <div className="item-quantity">Số lượng: {item.quantity}</div> 
-              <div className="item-price">{item.price * item.quantity} VNĐ</div> 
+              <div className="item-quantity">Số lượng: {item.quantity}</div>
+              <div className="item-price">{item.price * item.quantity} VNĐ</div>
             </div>
           </div>
         ))}

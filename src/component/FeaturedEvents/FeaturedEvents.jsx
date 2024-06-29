@@ -14,7 +14,7 @@ const FeaturedEvents = ({ categoryId, title }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/home/events-categories?categoryId=${categoryId}&limit=8`)
+    axios.get(`http://localhost:8080/home/events-categories?categoryId=${categoryId}&limit=6`)
       .then(response => {
         setEvents(response.data.result);
       })

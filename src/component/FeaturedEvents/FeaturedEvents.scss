@@ -1,7 +1,6 @@
 .featured-events {
     margin-bottom: 40px;
-    // margin-left: 60px !important;
-    // margin-right: 60px !important;
+    
     padding: 0 100px;
     display: flex;
     justify-content: center; /* Center the slider container */
@@ -30,34 +29,21 @@
   }
   
  
-  /* FeaturedEvents.scss */
-
-// .event-group {
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: stretch;
-// }
-
-// .hot-event {
-//   flex: 1;
-//   margin: 10px;
-//   max-width: 22%;
-// }
-/* Add Font Awesome to your project (refer to their installation guide) */
+ 
 
 .featured-events .custom-prev-arrow,
 .featured-events .custom-next-arrow {
-  /* Common styles for both arrows */
+
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 999;
   cursor: pointer;
-  background-color:#0c0e4f21;
+  background-color:#0c0e4f38;
   border: none;
   padding: 10px;
   font-size: 33PX;
-  color: #333; /* Adjust color as needed */
+  color: #252525; /* Adjust color as needed */
 }
 
 .featured-events .custom-prev-arrow {
@@ -69,12 +55,7 @@
   right: 10px; /* Adjust right position as needed */
 }
 
-// .featured-events .custom-prev-arrow::before {
-//   content: '\f04a'; /* Font Awesome left arrow icon (fa-arrow-left) */
-// }
 
-// .featured-events .custom-next-arrow::before {
-//   content: '\f04b'; /* Font Awesome right arrow icon (fa-arrow-right) */
 .text-a{
   font-size: 2em;
   margin-left: 20px;
