@@ -6,84 +6,250 @@ import { toast } from 'react-toastify';
 import '../LoginPage/LoginPage.scss';
 
 const LoginPage = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    // Lấy currentUser từ state của Redux
-    const currentUser = useSelector(state => state.user.currentUser);  
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-    const errorMessage = useSelector(state => state.user.error);
-    const role = useSelector(state => state.user.role);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const errorMessage = useSelector((state) => state.user.error);
+  const role = useSelector((state) => state.user.role);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loginCompleted, setLoginCompleted] = useState(false); // Biến cờ đánh dấu đã đăng nhập hoàn thành hay chưa
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loginCompleted, setLoginCompleted] = useState(false);
+  const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
+  const [showVerifyOTPPopup, setShowVerifyOTPPopup] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await dispatch(loginUserAction(email, password));
-            if (loginCompleted === false) {
-                setLoginCompleted(true);
-            }
-        } catch (error) {
-            // Xử lý lỗi nếu cần
-            setError(error.message);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(loginUserAction(email, password));
+      if (loginCompleted === false) {
+        setLoginCompleted(true);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-    useEffect(() => {
-        if (loginCompleted && isLoggedIn) {
-            toast.success("Login success!");
-            const from = location.state?.from || '/';
-            if (role === "USER") {
+  const handleForgotPassword = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/account/forgot_password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: forgotPasswordEmail }),
+      });
 
-                navigate(from, { replace: true });
-            }
-            else if (role === "MERCHANT USER") {
-                navigate(from, { replace: true });
-            }
-            else if (role === "ADMIN") {
-                navigate("/admin");
-            }
-        } else if (loginCompleted){
-            toast.error("Username or password is incorrect!");
-            setLoginCompleted(false);
-        }
-    }, [loginCompleted]);
+      const data = await response.json();
 
-    return (
-        <div className="container ">
-            <div className='change'>
-                <div className="col-md-6">
-                    <div className="card mt-5">
-                        <div className="card-body">
-                            <h2 className="card-title text-center mb-4">Login</h2>
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">username</label>
-                                    <input type="text" className="form-control" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="password" className="form-label">Password</label>
-                                    <input type="password" className="form-control" id="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                </div>
-                                <div className="d-grid gap-2">
-                                    <button type="submit" className="btn btn-primary">Login</button>
-                                </div>
-                            </form>
-                            {error && <div className="alert alert-danger mt-3" role="alert">{error}</div>}
-                        </div>
-                        <div className="card-footer text-center">
-                            <div>Don't have an account? <Link to="/register">Register here</Link></div>
-                        </div>
-                    </div>
+      if (response.ok) {
+        toast.success(data.message);
+        
+          
+      } else {
+        toast.error(data.message || 'Failed to send OTP');
+      }
+    } catch (error) {
+      toast.error('An error occurred');
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/account/verifyOTP', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        body: JSON.stringify({
+          email: forgotPasswordEmail,
+          otp: otp,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.message);
+        
+          setShowVerifyOTPPopup(true);
+      } else {
+        toast.error(data.message || 'Invalid OTP');
+      }
+    } catch (error) {
+      toast.error('An error occurred');
+    }
+  };
+
+  const handleResetPassword = async () => {
+    if (newPassword !== confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:8080/account/resetPassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        
+          },
+          credentials: 'include',
+        body: JSON.stringify({ password: newPassword }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        toast.success(data.message);
+        setNewPassword('');
+          setConfirmPassword('');
+          navigate('/login');
+      } else {
+        toast.error(data.message || 'Failed to reset password');
+      }
+    } catch (error) {
+      toast.error('An error occurred');
+    }
+  };
+
+  useEffect(() => {
+    if (loginCompleted && isLoggedIn) {
+      toast.success('Login success!');
+      const from = location.state?.from || '/';
+      if (role === 'USER') {
+        navigate(from, { replace: true });
+      } else if (role === 'MERCHANT USER') {
+        navigate(from, { replace: true });
+      } else if (role === 'ADMIN') {
+        navigate('/admin');
+      }
+    } else if (loginCompleted) {
+      toast.error('Username or password is incorrect!');
+      setLoginCompleted(false);
+    }
+  }, [loginCompleted]);
+
+  return (
+    <div className="container ">
+      <div className="change">
+        <div className="col-md-6">
+          <div className="card mt-5">
+            <div className="card-body">
+              <h2 className="card-title text-center mb-4">Login</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">
+                    username
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="d-grid gap-2">
+                  <button type="submit" className="btn btn-primary">
+                    Login
+                  </button>
+                </div>
+              </form>
+              {error && (
+                <div className="alert alert-danger mt-3" role="alert">
+                  {error}
+                </div>
+              )}
             </div>
+            <div className="card-footer text-center">
+              <div>
+                Don't have an account? <Link to="/register">Register here</Link>
+              </div>
+              <div>
+                <button onClick={() => setShowForgotPasswordPopup(true)}>
+                  Forgot Password?
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      </div>
+
+      {/* Forgot Password Popup */}
+      {showForgotPasswordPopup && (
+        <div className="popup">
+          <div className="popup-content" style={{ backgroundColor: 'lightblue' }}>
+            <h2>Forgot Password</h2>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={forgotPasswordEmail}
+              onChange={(e) => setForgotPasswordEmail(e.target.value)}
+            />
+            <button onClick={handleForgotPassword}>Send OTP</button>
+            <button onClick={() => setShowForgotPasswordPopup(false)}>
+              Cancel
+            </button>
+
+            <h2>Verify OTP</h2>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}/>
+              <button onClick={handleVerifyOTP}>Verify</button>  
+          </div>
+        </div>
+      )}
+
+      {/* Verify OTP Popup */}
+      {showVerifyOTPPopup && (
+        <div className="popup">
+          <div className="popup-content" style={{ backgroundColor: 'lightblue' }}>
+            
+            
+           
+            <input
+              type="password"
+              placeholder="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Confirm New Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+       
+            <button onClick={handleResetPassword}>Update Password</button>
+            <button onClick={() => setShowVerifyOTPPopup(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default LoginPage;
