@@ -1,5 +1,5 @@
 .featured-events {
-    margin-bottom: 40px;
+    // margin-bottom: 40px;
     
     padding: 0 100px;
     display: flex;
@@ -47,20 +47,30 @@
 }
 
 .featured-events .custom-prev-arrow {
-  // left: 10px; /* Adjust left position as needed */
+  left: 3px; /* Adjust left position as needed */
   // margin-right: 10px;
 }
 
 .featured-events .custom-next-arrow {
-  right: 10px; /* Adjust right position as needed */
+  right: 5px; /* Adjust right position as needed */
 }
 
 
 .text-a{
+  width:500px;
   font-size: 2em;
-  margin-left: 20px;
+  margin-left: 10px;
   font-weight: 600;
-  color:#1D1E4E;
-  padding-left: 130px;
+  color:#111535;
+  padding-left: 120px;
   text-align: left;
+}
+.but{
+  margin-left: 110px;
+  padding-top: 20px;
+  margin-bottom: 5px;
+}
+.butt{
+  background-color: rgba(132, 162, 226, 0.838);
+  border-radius: 3px;
 }

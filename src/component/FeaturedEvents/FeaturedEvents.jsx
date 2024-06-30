@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import automechanika from '../../assets/product/automechanika.png';
-import onlyFriends from '../../assets/product/only_friends.png';
 import './FeaturedEvents.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -9,12 +8,14 @@ import 'slick-carousel/slick/slick-theme.css';
 import HotEvent from '../../component/HotEvent/HotEvent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate, Link } from 'react-router-dom';
 
 const FeaturedEvents = ({ categoryId, title }) => {
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/home/events-categories?categoryId=${categoryId}&limit=6`)
+    axios.get(`http://localhost:8080/home/events-categories?categoryId=${categoryId}&limit=8`)
       .then(response => {
         setEvents(response.data.result);
       })
@@ -33,9 +34,16 @@ const FeaturedEvents = ({ categoryId, title }) => {
     nextArrow: <CustomNextArrow />,
   };
 
+  const handleShowAllClick = () => {
+    navigate(`/events/category/${categoryId}`);
+  };
+
   return (
     <div>
-      <div className='text-a'>{title}</div>
+      <div className='text-a' >
+        {title}
+      </div>
+     <div>
       <section className="featured-events">
         <Slider {...settings}>
           {events.map(event => (
@@ -48,7 +56,11 @@ const FeaturedEvents = ({ categoryId, title }) => {
             />
           ))}
         </Slider>
-      </section>
+        </section>
+      </div>
+      <div className='but'>
+        <button className='butt' onClick={handleShowAllClick} style={{ cursor: 'pointer' }}>Xem tất cả</button>
+        </div>
     </div>
   );
 };

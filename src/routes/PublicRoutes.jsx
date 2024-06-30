@@ -13,6 +13,9 @@ import Contact from '../component/Contact/Contact';
 import About from '../component/About/About';
 import CheckoutPage from '../pages/CartPage/CheckoutPage/CheckoutPage';
 import UserProfile from '../component/UserProfile/UserProfile';
+import EventList from '../component/List/EventList';
+
+
 
 const PublicRoutes = () => {
   return (
@@ -31,6 +34,8 @@ const PublicRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/events/category/:categoryId" element={<EventList />} />
+
       </Routes>
     </PublicLayout>
   );
