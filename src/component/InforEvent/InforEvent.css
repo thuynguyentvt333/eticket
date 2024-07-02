@@ -1,5 +1,6 @@
 .event-details {
     margin-bottom: 16px;
+    min-height: 373px;
   }
   
   .ant-card-meta-title {
@@ -23,12 +24,16 @@
     background-color: #3f982fa1;
     border-color: #3f982fa9;
   }
-  /* .baner1{
-    background-color: rgb(29, 28, 28);
-  } */
-   /* .row1{
-    background-color: rgb(29, 28, 28);
-   } */
     .info{
       background-color:#66a5ad5e;
     }
+  .des-event {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .modal-buy {
+    min-width: 600px !important;
+  }

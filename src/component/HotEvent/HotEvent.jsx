@@ -5,11 +5,16 @@ import { Link } from "react-router-dom";
 const HotEvent = ({ id, imgSrc, title, description }) => {
   return (
     <div className="hot-event">
-      <div className='img'>
-        <img src={imgSrc} alt={title} />
+      <div className='img-container'>
+        <div className='img-event'>
+          <img src={imgSrc} alt={title} />
+        </div>
       </div>
+     
       <div className="event-hot-content">
-        <h2>{title}</h2>
+        <div className='event-title'>
+          <h3>{title}</h3>
+        </div>
         <p>{description}</p>
       </div>
       <button>

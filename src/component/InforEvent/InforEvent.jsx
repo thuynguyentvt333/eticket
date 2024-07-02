@@ -100,7 +100,7 @@ const InforEvent = () => {
             <Card.Meta
               title={event.name}
               description={
-                <div>
+                <div className='des-event'>
                   <p><CalendarOutlined /> {new Date(event.start_time).toLocaleTimeString('vi-VN')} - {new Date(event.end_time).toLocaleTimeString('vi-VN')}, {new Date(event.start_time).toLocaleDateString('vi-VN')}</p>
                   <p><EnvironmentOutlined /> {event.location}</p>
                   <p>From {event.createTicketsResponseList.map(ticket => `${ticket.type_name}: ${ticket.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`).join(', ')}</p>
@@ -187,13 +187,11 @@ const InforEvent = () => {
 
       {/* Modal for ticket selection */}
       <Modal
+        className='modal-buy'
         title="Chọn vé"
         open={isModalOpen}
         onCancel={handleCloseModal}
         footer={[
-          <Button key="back" onClick={handleCloseModal}>
-            Hủy
-          </Button>,
           <Button key="submit" type="primary" onClick={handlePlaceOrder}>
             Đặt vé
           </Button>,
@@ -214,7 +212,7 @@ const InforEvent = () => {
           value={quantity}
           onChange={handleQuantityChange}
           min="1"
-          style={{ width: '60px' }}
+          style={{ width: '60px', marginLeft: '10px' }}
         />
       </Modal>
     </div>

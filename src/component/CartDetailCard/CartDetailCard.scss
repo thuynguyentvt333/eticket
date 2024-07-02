@@ -4,7 +4,10 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #eee; /* Đường kẻ phân cách giữa các item */
+    background-color: #f5f5f5f5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
+    border-bottom: 1px solid #eee;
   }
   
   .cart-detail-card > div { /* Khoảng cách giữa các phần tử trong card */
@@ -32,6 +35,8 @@
   .cart-detail-quanty {
     display: flex;
     align-items: center;
+    gap: 10px;
+    min-width: 100px;
   }
   
   .cart-detail-quanty .icon-update-cart {
@@ -46,6 +51,7 @@
   
   .cart-detail-price {
     font-weight: bold;
+    min-width: 150px;
   }
   
   .icon-update-cart {

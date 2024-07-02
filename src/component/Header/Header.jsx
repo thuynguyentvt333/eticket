@@ -99,7 +99,7 @@ const Header = () => {
           <nav>
             <ul className="nav justify-content-center">
               <li className="nav-item">
-                <Link to="/" className="vip nav-item">Tran chủ</Link>
+                <Link to="/" className="vip nav-item">Trang chủ</Link>
               </li>
               <li className="nav-item">
                 <Link to="/contact" className="vip nav-item">Thông Tin Liên Hệ </Link>

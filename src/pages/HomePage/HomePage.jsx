@@ -5,7 +5,7 @@ import Baner from '../../component/Baner/Baner';
 
 const HomePage = () => {
   return (
-    <div className='home ' style={{ backgroundColor: '#6990ad99'}}>
+    <div className='home ' style={{ backgroundColor: '#f5f5f5'}}>
    <Baner/>
     <FeaturedEvents categoryId={7} title="Ca Nhạc" />
       <FeaturedEvents categoryId={8} title="Sân Khấu Văn Hóa" />

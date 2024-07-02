@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addOneToCart, removeFromCart, deleteFromCart } from '../../redux/actions/CartActioin/cartActions';
 import { FaPlus, FaMinus, FaTrashAlt } from 'react-icons/fa';
 import './CartDetailCard.scss';
+import icon_ticket from '../../assets/icon/icon-ticket.png';
 
 const CartDetailCard = ({ item }) => {
     const dispatch = useDispatch();
@@ -25,8 +26,7 @@ const CartDetailCard = ({ item }) => {
     return (
         <>
             <div className="image-product">
-                {/* might need to display an image from the cart item here */}
-                {/* Example: <img src={item.image} alt={item.name} /> */}
+               <img src={icon_ticket}></img>
             </div>
             <div className="name-product">{item.eventName}</div> {/* Display the event name */}
             <div className="name-product">{item.type_name}</div> {/* Display the ticket type */}

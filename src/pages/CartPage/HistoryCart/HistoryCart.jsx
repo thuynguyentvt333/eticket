@@ -18,7 +18,8 @@ const HistoryCart = () => {
           }
         });
         if (response.data.code === 1000) {
-          setOrderHistory(response.data.result);
+          setOrderHistory(response.data.result.ticket);
+          console.log("check: ", orderHistory)
         }
       } catch (error) {
         console.error('Error fetching order history:', error);
@@ -38,21 +39,25 @@ const HistoryCart = () => {
       <h2>Lịch sử mua hàng</h2>
       <hr />
 
-      {orderHistory.map((order) => (
+      {orderHistory && orderHistory.length > 0 && orderHistory.map((order) => (
         <div key={order.ticketId} className="order-item">
           <div className="order-header">
-            <span className="order-date">Ngày thanh toán: {order.paymentDate}</span>
+            <span className="order-date">Ngày thanh toán: {order.paymentTime}</span>
           </div>
 
           <div className="order-details">
-            <h3>{order.eventName}</h3>
-            <p>Ngày diễn ra: {order.eventDate}</p>
-            <p>Thời gian bắt đầu: {order.eventStartTime}</p>
-            <p>Thời gian kết thúc: {order.eventEndTime}</p>
-            <p>Địa điểm: {order.location}</p>
+            {order.events.length > 0 && 
+              <div>
+                <h5>{order.events[0].eventName}</h5>
+                <div className='time-event'>
+                  <p>Ngày diễn ra: {order.events[0].edate}</p>
+                  <p>Thời gian bắt đầu: {order.events[0].estart}</p>
+                  <p>Thời gian kết thúc: {order.events[0].eend}</p>
+                </div>
+                <p>Địa điểm: {order.events[0].location}</p>
+              </div>
+            }
           </div>
-
-          <hr />
         </div>
       ))}
     </div>
