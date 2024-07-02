@@ -105,7 +105,7 @@ const Header = () => {
                 <Link to="/contact" className="vip nav-item">Thông Tin Liên Hệ </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="vip nav-item">Thông Tin</Link>
+                <Link to="/about" className="vip nav-item">Thông Tin Về </Link>
               </li>
               {/* <li className="nav-item">
                 <a className="nav-link" href="#">Filter</a>
