@@ -42,6 +42,9 @@ const Header = () => {
     event.preventDefault(); // Ngăn chặn form submit mặc định
     navigate(`/search?name=${searchTerm}`); // Chuyển hướng đến trang kết quả tìm kiếm
   };
+  const handleHistory = (event) => {
+    navigate(`/cart`); // Chuyển hướng đến trang kết quả tìm kiếm
+  };
 
   // Lấy thông tin loại tài khoản từ Redux store
   // const userType = useSelector(state => state.user.currentUser.userType); // Giả sử lưu thông tin userRole trong Redux store
@@ -67,7 +70,7 @@ const Header = () => {
           {isLoggedIn ? (
             <div className="dropdown d-inline-block">
               <button className="btn btn-outline-light me-2 dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Hello, {currentUser.username}
+                Xin chào, {currentUser.username}
               </button>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" >
                 <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
@@ -75,13 +78,14 @@ const Header = () => {
                   <li><Link className="dropdown-item" to="/manage-event">Dashboard</Link></li>
                 }
                 <li><hr className="dropdown-divider"/></li>
-                <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
+                <li><button className="dropdown-item" onClick={handleHistory}>Lịch sửa mua hàng</button></li>
               </ul>
             </div>
           ) : (
             <>
-              <Link to="/login" className="btn">Login</Link>
-              <Link to="/register" className="btn">Sign Up</Link>
+              <Link to="/login" className="btn">Đăng Nhập</Link>
+              <Link to="/register" className="btn">Đăng kí </Link>
             </>
           )}
           <Link to="/cart" className="btn btn-outline-light icon-cart">
@@ -95,13 +99,13 @@ const Header = () => {
           <nav>
             <ul className="nav justify-content-center">
               <li className="nav-item">
-                <Link to="/" className="vip nav-item">Home</Link>
+                <Link to="/" className="vip nav-item">Tran chủ</Link>
               </li>
               <li className="nav-item">
-                <Link to="/contact" className="vip nav-item">Contact</Link>
+                <Link to="/contact" className="vip nav-item">Thông Tin Liên Hệ </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="vip nav-item">About</Link>
+                <Link to="/about" className="vip nav-item">Thông Tin</Link>
               </li>
               {/* <li className="nav-item">
                 <a className="nav-link" href="#">Filter</a>

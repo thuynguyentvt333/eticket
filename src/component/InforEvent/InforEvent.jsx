@@ -118,7 +118,7 @@ const InforEvent = () => {
             cover={
               <img
                 alt={event.name}
-                src={event.banner !== "Not found" ? event.banner : "https://i.pinimg.com/564x/20/a4/a4/20a4a42c49c9c1de138a40014a111cfe.jpg"} // Placeholder image if no banner
+                src={event.banner !== "Not found" ? event.banner : "https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F608%2F332%2Fts%2Fds%2F1a%2Fcf%2F0a%2Fdd89be01b53f00f260e91370a58fcc86.jpg&w=1920&q=75"} // Placeholder image if no banner
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
             }
@@ -150,7 +150,7 @@ const InforEvent = () => {
         <Col span={12}>
           <div className="event-details" style={{ textAlign: 'center' }}>
             <img
-              src="https://i.pinimg.com/564x/50/b3/5f/50b35f57aaba6403078d232b62e91736.jpg"
+              src="https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F608%2F332%2Fts%2Fds%2F65%2F82%2F1e%2F23f76562706705c61e292b609df38ea1.png&w=1920&q=75"
               alt="Banner"
               style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
             />

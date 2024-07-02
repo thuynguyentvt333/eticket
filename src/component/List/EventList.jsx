@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {  useEffect, useState } from 'react';
+import {Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './EventList.scss';
 import automechanika from '../../assets/product/automechanika.png';
 
 const EventList = () => {
+
   const { categoryId } = useParams();
   const [events, setEvents] = useState([]);
 
@@ -30,6 +31,11 @@ const EventList = () => {
               <p>{event.city}, {event.location}</p>
               <p>{new Date(event.startDate).toLocaleDateString('vi-VN')}</p>
               <p>From {event.minPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+              <div className="event-hot-content">
+      </div>
+      <button className='nut'>
+        <Link to={`/eventinfor/${event.id}`} style={{ textDecoration: 'none', color: 'white' }}>Chi Tiết</Link>
+      </button>
             </div>
           </div>
         ))}
