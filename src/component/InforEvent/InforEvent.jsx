@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { Card, Button, Row, Col, Typography, Divider, Space, Modal, Radio } from 'antd';
+import { Card, Button, Row, Col, Typography, Divider, Modal, Checkbox, InputNumber } from 'antd';
 import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons';
-import './InforEvent.css'; 
+import './InforEvent.css';
 import { addToCart } from '../../redux/actions/CartActioin/cartActions';
 import { toast } from 'react-toastify';
 
@@ -13,26 +13,40 @@ const InforEvent = () => {
   const [event, setEvent] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn); 
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState(null); 
-  const [quantity, setQuantity] = useState(1); 
-  const [selectedTicketType, setSelectedTicketType] = useState(null); // State for selected ticket type
+
+  // State for selected ticket types and quantities
+  const [selectedTicketTypes, setSelectedTicketTypes] = useState([]);
+  const [ticketQuantities, setTicketQuantities] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/home/${id}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:8080/home/${id}`)
+      .then((response) => {
         setEvent(response.data.result);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching event details:', error);
       });
   }, [id]);
 
+  // Effect to reset quantities when selected types change
+  useEffect(() => {
+    setTicketQuantities((prevQuantities) => {
+      const updatedQuantities = { ...prevQuantities }; 
+      selectedTicketTypes.forEach((ticketId) => {
+        if (!(ticketId in updatedQuantities)) { 
+          updatedQuantities[ticketId] = 1; 
+        }
+      });
+      return updatedQuantities; 
+    });
+  }, [selectedTicketTypes]);
+
   const handleOpenModal = () => {
     if (!isLoggedIn) {
-      // Redirect to login page and store current location
       navigate('/login', { state: { from: location.pathname + location.search } });
     } else {
       setIsModalOpen(true);
@@ -41,56 +55,62 @@ const InforEvent = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedTicket(null); // Reset selected ticket
-    setSelectedTicketType(null); // Reset selected ticket type
-    setQuantity(1); // Reset quantity
+    setSelectedTicketTypes([]); // Clear selected types on close
+    setTicketQuantities({}); // Clear quantities on close
   };
 
-  const handleQuantityChange = (e) => {
-    setQuantity(parseInt(+e.target.value));
-    console.log('check: ', e.target.value, quantity);
+  const handleTicketTypeChange = (ticketId) => {
+    setSelectedTicketTypes((prevTypes) => {
+      if (prevTypes.includes(ticketId)) {
+        return prevTypes.filter((id) => id !== ticketId);
+      } else {
+        return [...prevTypes, ticketId];
+      }
+    });
   };
 
-  const handleTicketTypeChange = (e) => {
-    setSelectedTicketType(e.target.value);
+  const handleQuantityChange = (ticketId, quantity) => {
+    setTicketQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [ticketId]: quantity,
+    }));
   };
 
-  const validateForm = () => {
-    if (!selectedTicketType || !quantity) {
-      toast.error('vui lòng chọn loại vé nữa!');
-      return false;
-    }
-    return true;
-  };
-
+ 
   const handlePlaceOrder = () => {
-    if (!validateForm()) {
+    if (selectedTicketTypes.length === 0) {
+      toast.error('Vui lòng chọn loại vé và số lượng vé!'); // Hiển thị thông báo lỗi
       return;
     }
     if (isLoggedIn) {
-      // Find the selected ticket based on type
-      const selectedTicket = event.createTicketsResponseList.find(
-        (ticket) => ticket.type_name === selectedTicketType
-      );
-
-      if (selectedTicket) {
-        // Add selected ticket to cart with quantity
-        dispatch(addToCart({ ...selectedTicket, eventName: event.name, quantity }));
-        toast.success(" vừa thêm vé thành công, mau vào giỏ hàng thanh toán ")
-      } else {
-        // Handle case where no ticket type is selected
-        console.error("Ticket type not selected");
-      }
+      selectedTicketTypes.forEach((ticketId) => {
+        const quantity = ticketQuantities[ticketId] || 0;
+        if (quantity > 0) {
+          const selectedTicket = event.createTicketsResponseList.find(
+            (ticket) => ticket.id === ticketId
+          );
+          if (selectedTicket) {
+            dispatch(
+              addToCart({
+                ...selectedTicket,
+                eventName: event.name,
+                quantity,
+              })
+            );
+          }
+        }
+      });
+      toast.success('Đã thêm vé vào giỏ hàng!');
+    } else {
+      navigate('/login', { state: { from: location } });
     }
-    // } else {
-    //   navigate('/login', { state: { from: location } });
-    // }
-    handleCloseModal(); 
+    handleCloseModal();
   };
 
   if (!event) {
     return <div>Loading...</div>;
   }
+
 
   return (
     <div className='info' style={{ padding: '24px' }}>
@@ -187,7 +207,7 @@ const InforEvent = () => {
 
       {/* Modal for ticket selection */}
       <Modal
-        className='modal-buy'
+        className="modal-buy"
         title="Chọn vé"
         open={isModalOpen}
         onCancel={handleCloseModal}
@@ -197,26 +217,35 @@ const InforEvent = () => {
           </Button>,
         ]}
       >
-        {/* Radio buttons for ticket type selection */}
-        <Radio.Group onChange={handleTicketTypeChange} value={selectedTicketType}>
-          {event.createTicketsResponseList.map((ticket) => (
-            <Radio key={ticket.id} value={ticket.type_name}>
-              {ticket.type_name} ({ticket.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })})
-            </Radio>
-          ))}
-        </Radio.Group>
-        <label htmlFor="quantity">Số lượng:</label>
-        <input
-          type="number"
-          id="quantity"
-          value={quantity}
-          onChange={handleQuantityChange}
-          min="1"
-          style={{ width: '60px', marginLeft: '10px' }}
-        />
+        {event.createTicketsResponseList.map((ticket) => (
+          <div key={ticket.id} className="ticket-selection">
+            <Checkbox
+              checked={selectedTicketTypes.includes(ticket.id)}
+              onChange={() => handleTicketTypeChange(ticket.id)}
+            >
+              {ticket.type_name} (
+              {ticket.price.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+              })}
+              )
+            </Checkbox>
+            {selectedTicketTypes.includes(ticket.id) && (
+              <InputNumber
+                min={1}
+                value={ticketQuantities[ticket.id] || 1}
+                onChange={(quantity) =>
+                  handleQuantityChange(ticket.id, quantity)
+                }
+              />
+            )}
+          </div>
+        ))}
       </Modal>
     </div>
   );
 };
+
+
 
 export default InforEvent;

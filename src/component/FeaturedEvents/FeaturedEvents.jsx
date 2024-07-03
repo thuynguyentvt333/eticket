@@ -39,10 +39,16 @@ const FeaturedEvents = ({ categoryId, title }) => {
   };
 
   return (
-    <div>
+    <div className='FeatruedEvent'>
+      <div className='header-slidef'>
       <div className='text-a' >
         {title}
       </div>
+      <div className='but'>
+        <button className='butt' onClick={handleShowAllClick} style={{ cursor: 'pointer' }}>Xem tất cả</button>
+      </div>
+      </div>
+    
      <div>
       <section className="featured-events">
         <Slider {...settings}>
@@ -58,9 +64,6 @@ const FeaturedEvents = ({ categoryId, title }) => {
         </Slider>
         </section>
       </div>
-      <div className='but'>
-        <button className='butt' onClick={handleShowAllClick} style={{ cursor: 'pointer' }}>Xem tất cả</button>
-        </div>
     </div>
   );
 };

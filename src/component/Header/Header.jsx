@@ -102,10 +102,10 @@ const Header = () => {
                 <Link to="/" className="vip nav-item">Trang chủ</Link>
               </li>
               <li className="nav-item">
-                <Link to="/contact" className="vip nav-item">Thông Tin Liên Hệ </Link>
+                <Link to="/contact" className="vip nav-item"> Liên Hệ  </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="vip nav-item">Thông Tin Về </Link>
+                <Link to="/about" className="vip nav-item">Thông Tin Về TicketHub </Link>
               </li>
               {/* <li className="nav-item">
                 <a className="nav-link" href="#">Filter</a>

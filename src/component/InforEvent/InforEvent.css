@@ -1,6 +1,7 @@
 .event-details {
     margin-bottom: 16px;
-    min-height: 373px;
+    height: 300px;
+    
   }
   
   .ant-card-meta-title {
@@ -34,6 +35,72 @@
     gap: 30px;
   }
 
-  .modal-buy {
-    min-width: 600px !important;
-  }
+  /* InforEvent.css */
+
+.modal-buy .ant-modal-content {
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Đổ bóng cho Modal */
+}
+
+.modal-buy .ant-modal-header {
+  background-color: #eef0f3; /* Màu xanh nhạt */
+  border-bottom: none;
+  padding: 16px 24px; 
+}
+
+.modal-buy .ant-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50; /* Màu xanh đậm */
+}
+
+.modal-buy .ant-modal-body {
+  padding: 24px;
+}
+
+.ticket-selection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 23px;
+  padding: 10px;
+  border: 1px solid #f0f0f0; /* Viền mờ cho mỗi loại vé */
+  border-radius: 4px;
+}
+
+.ticket-selection:hover {
+  background-color: #f9f9f9; /* Nền sáng hơn khi di chuột */
+}
+
+.ticket-selection .ant-checkbox-wrapper {
+  font-weight: 500;
+}
+
+.ticket-selection .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ticket-selection .ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #61c295; /* Màu xanh khi chọn */
+}
+
+.ticket-selection .ant-checkbox-checked::after {
+  border-color: #47e4a6; /* Màu xanh khi chọn */
+}
+
+.ticket-selection .ant-input-number {
+  width: 80px;
+}
+
+.modal-buy .ant-modal-footer {
+  border-top: 1px solid #f0f0f0;
+  padding: 16px 24px;
+}
+
+.modal-buy .ant-btn-primary {
+  background-color: #2fb36f; /* Màu xanh dương */
+  border-color: #269059;
+}
+
+.modal-buy .ant-btn-primary:hover,
+.modal-buy .ant-btn-primary:focus {
+  background-color: #75edaf; /* Màu xanh sáng hơn khi di chuột */
+  border-color: #75edaf;
+}
