@@ -32,7 +32,7 @@ const Banner = () => {
       ];
   
     const settings = {
-    //   dots: true,
+      dots: true,
       infinite: true,
       speed: 500,
       slidesToShow: 2, // Hiển thị 2 slide mỗi lần

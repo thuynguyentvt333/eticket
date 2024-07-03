@@ -1,51 +1,76 @@
 .banner {
-    position: relative;
-    width: 100%;
-    height: 450px; /* Điều chỉnh chiều cao theo nhu cầu */
-    overflow: hidden;
-    padding:10px;
-    margin-left: 30px;
+  position: relative; 
+  width: 100%; 
+  padding: 20px auto; 
+  margin: 0 5px;
+  .slick-slider {
+    margin: 0 20px;
+    padding: 0 !important; 
   }
-  .rounded-video { /* Class bo góc cho video */
-    border-radius: 10px; /* Điều chỉnh độ cong bo góc */
-    overflow: hidden; /* Đảm bảo bo góc hiển thị chính xác */
-  }
-  
+
   .banner-slide {
-    position: relative;
-    height:auto;
-    margin: 0 5px;
-  }
+    position: relative; 
+    height: 400px; 
   
-  .banner-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 15%;
-    height: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0); /* Điều chỉnh độ trong suốt theo nhu cầu */
+    margin: 0 10px; 
+    padding-left: 30px;
+
+    .rounded-video {
+      border-radius: 15px;
+      overflow: hidden;
+   
+    }
+
+    .banner-content {
+      position: absolute;
+      bottom: 20px; 
+      left: 20px;
+      z-index: 10; 
+      button {
+        background-color: rgba(255, 255, 255, 0.353); 
+        color: #2c2a2a;
+        padding: 10px 20px 10px;
+        margin-left: 20px;
+        margin-bottom: 8px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease; 
+        &:hover {
+          background-color: #333;
+          color: #fff;
+        }
+      }
+    }
   }
+
   .banner-controls {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
     display: flex;
-   size:1.5em;
-    margin-left: -36px;
+    justify-content: space-between;
+    z-index: 10; 
+
+    button {
+      background: none;
+      border: none;
+      font-size: 30px;
+      color: #151515;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:hover {
+        color: #303131; 
+    }
   }
-  
-  .banner-controls button {
-    background: none;
-    border: none;
-    padding: 10px;
-    margin: 0 10px;
-    cursor: pointer;
-    
+}
+
+@media (max-width: 768px) {
+  .banner {
+    .banner-slide {
+      height: 300px; 
+    }
   }
+}}
