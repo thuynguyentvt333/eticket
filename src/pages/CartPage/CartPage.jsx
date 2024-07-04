@@ -19,10 +19,8 @@ const CartPage = () => {
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const navigate = useNavigate();
 
-  const handleOrder = async () => {
-    console.log('check: ', cartItems);
-  
-
+  const handlePayment = async () => {
+    // 1. Tạo apiPayload cho API thêm vào giỏ hàng
     const apiPayload = cartItems.map((item) => ({
       createTicketId: item.id,
       quantity: item.quantity,
@@ -31,21 +29,23 @@ const CartPage = () => {
     const token = Cookies.get('token');
 
     try {
+      // 2. Gọi API thêm vào giỏ hàng
       const response = await axios.post('http://localhost:8080/cart/add', apiPayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (response.status === 200) {
-        toast.success('Đặt hàng thành công');
+        toast.success('Đã thêm vé vào giỏ hàng!');
         dispatch(clearCart());
-        navigate('/cart');
+        navigate('/checkout'); 
       } else {
-        toast.error('Đặt hàng thất bại');
+        toast.error('Thêm vào giỏ hàng thất bại');
       }
     } catch (error) {
       toast.error('Có lỗi xảy ra');
-      console.error('Order error: ', error);
+      console.error('Error:', error);
     }
   };
 
@@ -74,7 +74,7 @@ const CartPage = () => {
         cartItems={cartItems} 
         totalItems={totalItems} 
         totalPrice={totalPrice} 
-        onOrder={handleOrder} 
+        onPayment={handlePayment} 
       />}
       {activeTab === 'history' && <HistoryCart />}
     </div>

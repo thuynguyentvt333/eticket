@@ -8,14 +8,9 @@ import {  useNavigate } from 'react-router-dom';
 import CartDetailCard from '../../../component/CartDetailCard/CartDetailCard';
 import './InfoCart.scss'; 
 
-const InfoCart = ({ cartItems, totalItems, totalPrice, onOrder }) => {
+const InfoCart = ({ cartItems, totalItems, totalPrice,onPayment  }) => {
   const navigate = useNavigate();
   
-
-  const onPayment = () => {
-    navigate('/checkout');
-  }
-
   const handleContinueBuy = () => {
     navigate('/');
   }
@@ -51,7 +46,7 @@ const InfoCart = ({ cartItems, totalItems, totalPrice, onOrder }) => {
                 <button className="back-home-page" onClick={handleContinueBuy}>
                   <FaArrowLeft /> Tiếp tục mua
                 </button>
-                <button className='button-a' onClick={onOrder}>Chốt số lượng vé trong giỏ hàng </button>
+                {/* <button className='button-a' onClick={onOrder}>Chốt số lượng vé trong giỏ hàng </button> */}
                 <button className='button-a' onClick={onPayment}>Thanh toán</button>
               </div>
               
