@@ -2,24 +2,23 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Table.scss';
 import Cookies from 'js-cookie';
+import Popup from './Popup';
 
-
-const Table = ({ data, selected, fetchData }) => {
+const Table = ({ data, selected, fetchData, onAccountClick }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupData, setPopupData] = useState(null);
 
-  // const handleStatusClick = (account) => {
-  //   setSelectedAccount(account);
-  //   setShowConfirm(true);
-  // };
   const handleStatusChange = (account) => {
     setSelectedAccount(account);
     setShowConfirm(true);
   };
+
   const handleChangeStatus = async () => {
     try {
       if (selectedAccount) {
-        const token = Cookies.get('token'); 
+        const token = Cookies.get('token');
         const response = await axios.post(
           'http://localhost:8080/admin/account/change-status',
           {
@@ -28,20 +27,61 @@ const Table = ({ data, selected, fetchData }) => {
           },
           {
             headers: {
-              Authorization: `Bearer ${token}`// Gửi token trong header
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
         if (response.data.code === 1000) {
           setShowConfirm(false);
-          fetchData(selected); 
+          fetchData(selected);
         } else {
           console.error('Lỗi khi thay đổi trạng thái:', response.data.message);
         }
       }
     } catch (error) {
       console.error('Lỗi khi gửi request:', error);
+    }
+  };
+
+  const handleRowClick = async (account) => {
+    onAccountClick(account);
+    setSelectedAccount(account);
+    setShowPopup(true);
+
+    try {
+      let response;
+      if (selected === 'all') {
+        response = await axios.get(
+          `http://localhost:8080/admin/account/${account.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`,
+            },
+          }
+        );
+      } else if (selected === 'merchant') {
+        response = await axios.get(
+          `http://localhost:8080/admin/merchantInfor/${account.mid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`,
+            },
+          }
+        );
+      } else if (selected === 'user') {
+        response = await axios.get(
+          `http://localhost:8080/admin/userInfor/${account.uid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`,
+            },
+          }
+        );
+      }
+      setPopupData(response.data.result);
+    } catch (error) {
+      console.error('Error fetching account details:', error);
     }
   };
 
@@ -59,7 +99,7 @@ const Table = ({ data, selected, fetchData }) => {
         <tr>
           <th>Merchant ID</th>
           <th>Username</th>
-          <th>Adress</th>
+          <th>Address</th>
           <th>Status</th>
         </tr>
       );
@@ -69,7 +109,7 @@ const Table = ({ data, selected, fetchData }) => {
           <th>User ID</th>
           <th>Username</th>
           <th>Phone</th>
-          <th>Adress</th>
+          <th>Address</th>
           <th>Status</th>
         </tr>
       );
@@ -82,7 +122,7 @@ const Table = ({ data, selected, fetchData }) => {
 
       if (selected === 'all') {
         return (
-          <tr key={item.id}>
+          <tr key={item.id} >
             <td>{item.id}</td>
             <td>{item.username}</td>
             <td>{item.roles}</td>
@@ -90,33 +130,33 @@ const Table = ({ data, selected, fetchData }) => {
         );
       } else if (selected === 'merchant') {
         return (
-          <tr key={item.mid}>
+          <tr key={item.mid} onClick={() => handleRowClick(item)}>
             <td>{item.mid}</td>
             <td>{item.username}</td>
             <td>{item.address}</td>
             <td>
-            <input
+              <input
                 type="checkbox"
                 checked={isActive}
                 onChange={() => handleStatusChange(item)}
               />
-            </td> 
+            </td>
           </tr>
         );
       } else if (selected === 'user') {
         return (
-          <tr key={item.uid}>
+          <tr key={item.uid} onClick={() => handleRowClick(item)}>
             <td>{item.uid}</td>
             <td>{item.username}</td>
             <td>{item.phone}</td>
-            <td>{item.addess}</td>
+            <td>{item.address}</td>
             <td>
-            <input
+              <input
                 type="checkbox"
                 checked={isActive}
                 onChange={() => handleStatusChange(item)}
               />
-            </td> 
+            </td>
           </tr>
         );
       }
@@ -125,13 +165,9 @@ const Table = ({ data, selected, fetchData }) => {
 
   return (
     <div>
-      <table className="custom-table">
-        <thead>
-          {renderTableHeader()}
-        </thead>
-        <tbody>
-          {renderTableData()}
-        </tbody>
+      <table>
+        <thead>{renderTableHeader()}</thead>
+        <tbody>{renderTableData()}</tbody>
       </table>
 
       {showConfirm && (
@@ -142,6 +178,10 @@ const Table = ({ data, selected, fetchData }) => {
             <button onClick={handleChangeStatus}>Có</button>
           </div>
         </div>
+      )}
+
+      {showPopup && (
+        <Popup data={popupData} onClose={() => setShowPopup(false)} />
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './MenuLeft.scss';
 const MenuLeft = ({ onSelect }) => {
   return (
     <div style={styles.menuLeft}>
