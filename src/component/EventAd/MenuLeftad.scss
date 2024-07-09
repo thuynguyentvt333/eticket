@@ -1,0 +1,24 @@
+
+.menu-left {
+   
+  
+    .menu-button {
+   
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f0f0f0; 
+      cursor: pointer; 
+  
+     
+      &:hover {
+        background-color: #e0e0e0; 
+      }
+  
+     
+      &.active { 
+        background-color: #007bffbc; 
+        color: white;
+      }
+    }
+  }

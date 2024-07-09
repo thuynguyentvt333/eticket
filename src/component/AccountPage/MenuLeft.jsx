@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MenuLeft.scss';
+
 const MenuLeft = ({ onSelect }) => {
+  const [selectedButton, setSelectedButton] = useState(null); 
+
+  const handleButtonClick = (value) => {
+    onSelect(value);
+    setSelectedButton(value);
+  };
+
   return (
-    <div style={styles.menuLeft}>
-      <button style={styles.button} onClick={() => onSelect('all')}>Tất cả</button>
-      <button style={styles.button} onClick={() => onSelect('merchant')}>Merchant</button>
-      <button style={styles.button} onClick={() => onSelect('user')}>User</button>
+    <div className="menu-left">
+      <button 
+        className={`menu-button ${selectedButton === 'all' ? 'active' : ''}`} 
+        onClick={() => handleButtonClick('all')}
+      >
+        Tất cả
+      </button>
+      <button 
+        className={`menu-button ${selectedButton === 'merchant' ? 'active' : ''}`} 
+        onClick={() => handleButtonClick('merchant')}
+      >
+        Merchant
+      </button>
+      <button 
+        className={`menu-button ${selectedButton === 'user' ? 'active' : ''}`} 
+        onClick={() => handleButtonClick('user')}
+      >
+        User
+      </button>
     </div>
   );
-};
-
-const styles = {
-  menuLeft: {
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#e0f0ff',
-    padding: '10px',
-  },
-  button: {
-    marginBottom: '10px',
-    padding: '10px',
-    borderRadius: '5px',
-    backgroundColor: '#c8e6ff',
-    border: 'none',
-    cursor: 'pointer',
-  }
 };
 
 export default MenuLeft;
