@@ -35,13 +35,13 @@ const InforEvent = () => {
   // Effect to reset quantities when selected types change
   useEffect(() => {
     setTicketQuantities((prevQuantities) => {
-      const updatedQuantities = { ...prevQuantities }; 
+      const updatedQuantities = { ...prevQuantities };
       selectedTicketTypes.forEach((ticketId) => {
-        if (!(ticketId in updatedQuantities)) { 
-          updatedQuantities[ticketId] = 1; 
+        if (!(ticketId in updatedQuantities)) {
+          updatedQuantities[ticketId] = 1;
         }
       });
-      return updatedQuantities; 
+      return updatedQuantities;
     });
   }, [selectedTicketTypes]);
 
@@ -49,7 +49,15 @@ const InforEvent = () => {
     if (!isLoggedIn) {
       navigate('/login', { state: { from: location.pathname + location.search } });
     } else {
-      setIsModalOpen(true);
+      const currentDate = new Date();
+      const startBookingDate = new Date(event.start_booking);
+      const endBookingDate = new Date(event.end_booking);
+
+      if (currentDate >= startBookingDate && currentDate <= endBookingDate) {
+        setIsModalOpen(true);
+      } else {
+        toast.error('Không thể đặt vé ngoài khoảng thời gian cho phép!');
+      }
     }
   };
 
@@ -76,10 +84,9 @@ const InforEvent = () => {
     }));
   };
 
- 
   const handlePlaceOrder = () => {
     if (selectedTicketTypes.length === 0) {
-      toast.error('Vui lòng chọn loại vé và số lượng vé!'); // Hiển thị thông báo lỗi
+      toast.error('Vui lòng chọn loại vé và số lượng vé!');
       return;
     }
     if (isLoggedIn) {
@@ -111,7 +118,6 @@ const InforEvent = () => {
     return <div>Loading...</div>;
   }
 
-
   return (
     <div className='info' style={{ padding: '24px' }}>
       <Row gutter={[16, 16]}>
@@ -128,7 +134,7 @@ const InforEvent = () => {
               }
             />
           </div>
-          <Button type="primary" style={{ marginTop: '16px' }} size="small" onClick={handleOpenModal}> 
+          <Button type="primary" style={{ marginTop: '16px' }} size="small" onClick={handleOpenModal}>
             Thêm vào giỏ hàng
           </Button>
         </Col>
@@ -147,15 +153,14 @@ const InforEvent = () => {
       </Row>
 
       {/* Separate the sections with a divider */}
-      <Divider style={{ marginTop: '48px', marginBottom: '32px',height: '3px', // Tăng độ dày của Divider
-  backgroundColor: 'black' }} /> 
+      <Divider style={{ marginTop: '48px', marginBottom: '32px', height: '3px', backgroundColor: 'black' }} />
 
       {/* Phần nội dung mới */}
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <div className="event-details">
             <Typography.Title level={3} style={{ marginBottom: '8px' }}>About</Typography.Title>
-            <p>{event.description}</p> {/* Fetch description from API */}
+            <p>{event.description}</p>
             <p>
               Hãy kêu gọi bạn bè và tham gia vào {event.location} vào ngày {new Date(event.start_time).toLocaleDateString('vi-VN')} để tận hưởng đêm nhạc và khiêu vũ đáng nhớ. Đừng bỏ lỡ cơ hội, mua vé ngay bây giờ!
             </p>
@@ -179,15 +184,15 @@ const InforEvent = () => {
       </Row>
 
       {/* Phần ticket info - Centered */}
-      <Row gutter={[16, 16]} style={{ marginTop: '48px' }} justify="center"> {/* Center the row */}
-        <Col span={19}> {/* Adjust span based on your desired width */}
+      <Row gutter={[16, 16]} style={{ marginTop: '48px' }} justify="center">
+        <Col span={19}>
           <div className="event-details">
             <Typography.Title level={3} style={{ marginBottom: '8px' }}>Ticket Information</Typography.Title>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <p style={{ margin: 0 }}>
                 <CalendarOutlined /> {new Date(event.start_time).toLocaleTimeString('vi-VN')} - {new Date(event.end_time).toLocaleTimeString('vi-VN')}, {new Date(event.start_time).toLocaleDateString('vi-VN')}
               </p>
-              <Button type="primary" style={{ marginTop: '16px' }} size="small" onClick={() => handleOpenModal(event.createTicketsResponseList[0])}>
+              <Button type="primary" style={{ marginTop: '16px' }} size="small" onClick={handleOpenModal}>
                 Thêm vào giỏ hàng
               </Button>
             </div>
@@ -245,7 +250,5 @@ const InforEvent = () => {
     </div>
   );
 };
-
-
 
 export default InforEvent;
