@@ -9,10 +9,10 @@ const HistoryCart = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const token = Cookies.get('token'); // Lấy token từ cookie
+        const token = Cookies.get('token');
         const response = await axios.get('http://localhost:8080/history', {
           headers: {
-            Authorization: `Bearer ${token}` // Gửi token trong header
+            Authorization: `Bearer ${token}`
           }
         });
         if (response.data.code === 1000) {

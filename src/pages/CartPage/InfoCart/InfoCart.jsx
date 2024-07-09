@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input } from 'reactstrap';
-
 import CartDetailCard from '../../../component/CartDetailCard/CartDetailCard';
 import './InfoCart.scss';
 
-const InfoCart = () => {
+const InfoCart = ({ onPayment }) => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -17,7 +16,7 @@ const InfoCart = () => {
   const [email, setEmail] = useState('');
   const token = Cookies.get('token');
 
-  const fetchCartData = async () => {
+  const fetchCartData = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:8080/my-cart', {
         headers: {
@@ -29,7 +28,7 @@ const InfoCart = () => {
         setCartItems(response.data.result);
 
         const totalItemsCount = response.data.result.reduce((sum, item) => sum + item.quantity, 0);
-        const totalPriceValue = response.data.result.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const totalPriceValue = response.data.result.reduce((sum, item) => sum + (item.price), 0);
 
         setTotalItems(totalItemsCount);
         setTotalPrice(totalPriceValue);
@@ -39,17 +38,17 @@ const InfoCart = () => {
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchCartData();
-  }, []);
+  }, [fetchCartData]);
 
   const handleContinueBuy = () => {
     navigate('/');
   };
 
-  const handlePayment = () => {
+  const handlePaymentClick = () => {
     setIsModalOpen(true);
   };
 
@@ -99,7 +98,7 @@ const InfoCart = () => {
               <button className="back-home-page" onClick={handleContinueBuy}>
                 <FaArrowLeft /> Tiếp tục mua
               </button>
-              <button className='button-a' onClick={handlePayment}>Thanh toán</button>
+              <button className='button-a' onClick={handlePaymentClick}>Thanh toán</button>
             </div>
           </div>
         </div>
