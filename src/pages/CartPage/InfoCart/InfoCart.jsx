@@ -17,31 +17,31 @@ const InfoCart = () => {
   const [email, setEmail] = useState('');
   const token = Cookies.get('token');
 
-  useEffect(() => {
-    const fetchCartData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/my-cart', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (response.data.code === 1000) {
-          setCartItems(response.data.result);
-
-          const totalItemsCount = response.data.result.reduce((sum, item) => sum + item.quantity, 0);
-          const totalPriceValue = response.data.result.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-          setTotalItems(totalItemsCount);
-          setTotalPrice(totalPriceValue);
-        } else {
-          console.error('Error fetching cart data:', response.data.message);
+  const fetchCartData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/my-cart', {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-      } catch (error) {
-        console.error('Error fetching cart data:', error);
-      }
-    };
+      });
 
+      if (response.data.code === 1000) {
+        setCartItems(response.data.result);
+
+        const totalItemsCount = response.data.result.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPriceValue = response.data.result.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        setTotalItems(totalItemsCount);
+        setTotalPrice(totalPriceValue);
+      } else {
+        console.error('Error fetching cart data:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchCartData();
   }, []);
 
@@ -54,8 +54,8 @@ const InfoCart = () => {
   };
 
   const handleSubmit = async () => {
-    const cartIds = cartItems.map(item => item.cartId); // Lấy cartId của từng item trong giỏ hàng
-    const method = 1; // Phương thức thanh toán
+    const cartIds = cartItems.map(item => item.cartId);
+    const method = 1;
 
     try {
       const response = await axios.post('http://localhost:8080/api/payment/create_payment', {
@@ -69,7 +69,7 @@ const InfoCart = () => {
       });
 
       if (response.data.code === 1000) {
-        window.open(response.data.result, '_blank'); // Mở URL thanh toán trong tab mới
+        window.open(response.data.result, '_blank');
       } else {
         console.error('Error creating payment request:', response.data.message);
       }
@@ -82,10 +82,10 @@ const InfoCart = () => {
     <div className="info-cart">
       <h2>Giỏ Hàng</h2>
       {cartItems && cartItems.length > 0 ? (
-        <div className="cart-details">
-          <div className="content-left">
+        <div>
+          <div>
             {cartItems.map((item, index) => (
-              <CartDetailCard key={index} item={item} />
+              <CartDetailCard key={index} item={item} onUpdateCart={fetchCartData} />
             ))}
           </div>
           <div className="content-right">

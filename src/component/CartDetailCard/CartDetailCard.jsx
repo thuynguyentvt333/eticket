@@ -1,43 +1,76 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { addOneToCart, removeFromCart, deleteFromCart } from '../../redux/actions/CartActioin/cartActions';
-import { FaPlus, FaMinus, FaTrashAlt } from 'react-icons/fa';
+import React, { useState } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { FaTrashAlt } from 'react-icons/fa';
 import './CartDetailCard.scss';
 import icon_ticket from '../../assets/icon/icon-ticket.png';
 
-const CartDetailCard = ({ item }) => {
-    const dispatch = useDispatch();
+const CartDetailCard = ({ item, onUpdateCart }) => {
+    const [quantity, setQuantity] = useState(item.quantity);
 
-    const addOneProduct = (itemCart) => {
-        dispatch(addOneToCart(itemCart));
+    const handleUpdateQuantity = async () => {
+        const token = Cookies.get('token');
+        try {
+            const response = await axios.post('http://localhost:8080/cart/update', {
+                cartId: item.cartId,
+                updateNumber: quantity
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.data.code === 1000) {
+                onUpdateCart(); // Gọi hàm từ component cha để cập nhật lại giỏ hàng
+            } else {
+                console.error('Error updating cart quantity:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error updating cart quantity:', error);
+        }
     };
 
-    const minusOneProduct = (itemCart) => {
-        dispatch(removeFromCart(itemCart.id));
+    const handleDeleteItem = async () => {
+        const token = Cookies.get('token');
+        try {
+            const response = await axios({
+                method: 'delete',
+                url: 'http://localhost:8080/cart/delete',
+                data: {
+                    cartIds: [item.cartId]
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.data.code === 1000) {
+                onUpdateCart(); // Gọi hàm từ component cha để cập nhật lại giỏ hàng
+            } else {
+                console.error('Error deleting cart item:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error deleting cart item:', error);
+        }
     };
-
-    const deleteCartDetail = (id) => {
-        dispatch(deleteFromCart(id));
-    };
-
-    // Tính giá tiền của sản phẩm
-    const totalPrice = item.price * item.quantity; // Use "price" for calculation
 
     return (
-        <>
+        <div className="cart-detail-card">
             <div className="image-product">
-               <img src={icon_ticket}></img>
+                <img src={icon_ticket} alt="Ticket Icon" />
             </div>
-            <div className="name-product">{item.eventName}</div> {/* Display the event name */}
-            <div className="name-product">{item.type_name}</div> {/* Display the ticket type */}
-            <div className="cart-detail-quanty">
-                <FaPlus className="icon-update-cart" onClick={() => addOneProduct(item)} />
-                <span>{item.quantity}</span>
-                <FaMinus className="icon-update-cart" onClick={() => minusOneProduct(item)} /> 
+            <div className="name-product">{item.eventName}</div>
+            <div className="name-product">{item.typeName}</div>
+            <div className="cart-detail-quantity">
+                <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    min="1"
+                />
+                <button onClick={handleUpdateQuantity}>Cập nhật</button>
             </div>
-            <div className="cart-detail-price">{totalPrice} VNĐ</div> {/* Hiển thị giá tiền */}
-            <FaTrashAlt className="icon-update-cart" onClick={() => deleteCartDetail(item.id)} />
-        </>
+            <div className="cart-detail-price">{item.price} VNĐ</div>
+            <FaTrashAlt className="icon-update-cart" onClick={handleDeleteItem} />
+        </div>
     );
 };
 
