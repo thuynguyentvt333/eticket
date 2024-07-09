@@ -48,3 +48,13 @@
         margin-top: 200px;
         margin-bottom: 200px;
     }
+
+    .info-cart {
+        .cart-details {
+            .content-left {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+        }
+    }

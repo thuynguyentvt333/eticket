@@ -1,52 +1,34 @@
 .purchase-history {
-    /* ... Các thuộc tính CSS khác ... */
-  
-    .order-item {
-      padding: 10px;
-      background-color: azure;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-  
+  padding: 20px;
+
+  .order-item {
+    padding: 10px;
+    background-color: azure;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+
     .order-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
     }
-  
-    .order-details {
-      .time-event {
-        display: flex;
-        gap: 60px;
 
-        p {
-          display: inline-block;
+    .order-details {
+      .event-item {
+        margin-bottom: 10px;
+
+        .time-event {
+          display: flex;
+          gap: 20px;
+          margin-bottom: 5px;
+
+          p {
+            display: inline-block;
+            margin: 0;
+          }
         }
       }
     }
-  
-    .ticket-item {
-      display: flex;
-      align-items: center; 
-      margin-bottom: 10px; 
-    }
-  
-    .ticket-image {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      margin-right: 15px;
-      border-radius: 4px; 
-    }
-  
-    .ticket-info {
-      /* ... Các thuộc tính CSS khác ... */
-    }
-  
-    .order-total {
-      display: flex;
-      justify-content: flex-end; 
-      font-weight: bold;
-    }
   }
+}

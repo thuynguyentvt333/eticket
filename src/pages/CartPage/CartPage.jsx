@@ -71,9 +71,6 @@ const CartPage = () => {
     </div>
     <div className="content">
       {activeTab === 'cart' && <InfoCart 
-        cartItems={cartItems} 
-        totalItems={totalItems} 
-        totalPrice={totalPrice} 
         onPayment={handlePayment} 
       />}
       {activeTab === 'history' && <HistoryCart />}

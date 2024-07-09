@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Card, Button, Row, Col, Typography, Divider, Modal, Checkbox, InputNumber } from 'antd';
 import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons';
 import './InforEvent.css';
-import { addToCart } from '../../redux/actions/CartActioin/cartActions';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 const InforEvent = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // State for selected ticket types and quantities
   const [selectedTicketTypes, setSelectedTicketTypes] = useState([]);
   const [ticketQuantities, setTicketQuantities] = useState({});
+
+  const token = Cookies.get('token');
 
   useEffect(() => {
     axios
@@ -46,25 +45,21 @@ const InforEvent = () => {
   }, [selectedTicketTypes]);
 
   const handleOpenModal = () => {
-    if (!isLoggedIn) {
-      navigate('/login', { state: { from: location.pathname + location.search } });
-    } else {
-      const currentDate = new Date();
-      const startBookingDate = new Date(event.start_booking);
-      const endBookingDate = new Date(event.end_booking);
+    const currentDate = new Date();
+    const startBookingDate = new Date(event.start_booking);
+    const endBookingDate = new Date(event.end_booking);
 
-      if (currentDate >= startBookingDate && currentDate <= endBookingDate) {
-        setIsModalOpen(true);
-      } else {
-        toast.error('Không thể đặt vé ngoài khoảng thời gian cho phép!');
-      }
+    if (currentDate >= startBookingDate && currentDate <= endBookingDate) {
+      setIsModalOpen(true);
+    } else {
+      toast.error('Không thể đặt vé ngoài khoảng thời gian cho phép!');
     }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedTicketTypes([]); // Clear selected types on close
-    setTicketQuantities({}); // Clear quantities on close
+    setSelectedTicketTypes([]);
+    setTicketQuantities({});
   };
 
   const handleTicketTypeChange = (ticketId) => {
@@ -84,33 +79,35 @@ const InforEvent = () => {
     }));
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (selectedTicketTypes.length === 0) {
       toast.error('Vui lòng chọn loại vé và số lượng vé!');
       return;
     }
-    if (isLoggedIn) {
-      selectedTicketTypes.forEach((ticketId) => {
-        const quantity = ticketQuantities[ticketId] || 0;
-        if (quantity > 0) {
-          const selectedTicket = event.createTicketsResponseList.find(
-            (ticket) => ticket.id === ticketId
-          );
-          if (selectedTicket) {
-            dispatch(
-              addToCart({
-                ...selectedTicket,
-                eventName: event.name,
-                quantity,
-              })
-            );
-          }
+
+    const cartItems = selectedTicketTypes.map((ticketId) => ({
+      createTicketId: ticketId,
+      quantity: ticketQuantities[ticketId] || 0,
+    }));
+
+    try {
+      const response = await axios.post('http://localhost:8080/cart/add', cartItems, 
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
         }
-      });
-      toast.success('Đã thêm vé vào giỏ hàng!');
-    } else {
-      navigate('/login', { state: { from: location } });
+      );
+      if (response.data.code === 1000) {
+        toast.success('Đã thêm vé vào giỏ hàng!');
+      } else {
+        toast.error('Lỗi khi thêm vé vào giỏ hàng!');
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast.error('Lỗi khi thêm vé vào giỏ hàng!');
     }
+
     handleCloseModal();
   };
 
