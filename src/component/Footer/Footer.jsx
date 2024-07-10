@@ -2,9 +2,9 @@ import React from 'react';
 import './Foot.scss';
 const Footer = () => {
   return (
-    <footer style={{backgroundColor:'#2DC275'}} className=" text-light py-3">
+    <footer style={{backgroundColor:'#27a463'}} className=" text-light py-3">
       <div className="container" >
-        <div style={{ backgroundColor: '#2DC275', width: '100%', height: '100%' }} className="row" >
+        <div style={{ backgroundColor: '#27a463', width: '100%', height: '100%' }} className="row" >
           <div className="col-md-6">
             <h5>About Us</h5>
             <p>We are a leading online retailer for hight.</p>
@@ -12,9 +12,9 @@ const Footer = () => {
           <div className="col-md-3">
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
-              <li className="nav-item"><a  className="vip " href="#">Home</a></li>
-              <li className="nav-item"><a  className="vip " href="#">Contact</a></li>
-              <li className="nav-item"><a  className="vip " href="#">About</a></li>
+              <li className="nav-item">Home</li>
+              <li className="nav-item">Contac</li>
+              <li className="nav-item">About</li>
             </ul>
           </div>
           <div className="col-md-3">

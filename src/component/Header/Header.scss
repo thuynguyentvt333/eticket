@@ -1,93 +1,137 @@
 .header {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2DC275;
-  // padding: 10px 20px;
-}
-.header-container{
-  width:1350px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between; /* Cách đều các phần tử con */
-  align-items: center; /* Căn giữa các phần tử con theo trục dọc (tuỳ chọn) */
-}
-.logo img {
-  height: 80px;
-}
+  background-color: #27a463; 
+  padding: 1rem 0;
+  color: white; // Màu chữ header: Trắng
 
-nav ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem; 
 
-nav ul li {
-  margin: 0 15px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #FFFFE0;
-}
-
-.search {
-  width:65%;
-  display: flex;
-  align-items: center;
-  padding-left: 185px;
-}
-.form{
-  width:100%;
-}
-.search input {
-  padding: 5px;
-  width:70%;
-  // margin-left: 80px;
-  // margin-right: 20px;
-  border-radius: 10px;
-}
-
-.search button {
-  padding: 5px 10px;
-  background-color: #fff;
-  color: #000401;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-}
-
-.user-actions a {
-  // margin-left: 15px;
-
-  text-decoration: none;
-  color: #1a3555;
-}
-.row{
-  background-color: #2DC275;
-  width: 100%;
-  height: 45px;
-
-
-  // padding-bottom: 0px;
-  // padding: 0px 0px;
-}
-
-.icon-cart {
-  &:hover {
-    span {
-      color: #f2f3f4;
+    .logo {
+      height:80px;
+      overflow: hidden;
+      img {
+        height: 80px; // Điều chỉnh kích thước logo
+      }
     }
-    
-  }
-}
 
-.count-item-cart {
-  color: white;
-  margin-left: 5px;
-}
-.vip{
-  color:#fff;
+    .search {
+      flex-grow: 1; // Cho phép search chiếm không gian còn lại
+      margin: 0 1rem; // Khoảng cách
+
+      .form {
+        display: flex;
+        align-items: center;
+
+        input {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 0.5rem;
+          margin-right: 0.5rem; // Khoảng cách
+          width: 100%;
+
+          &::placeholder {
+            color: #999;
+          }
+        }
+
+        button {
+          background-color: #00BCD4; // Màu nút Search: Xanh dương
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #0097A7; // Màu khi hover
+          }
+        }
+      }
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        background-color: transparent;
+        color: white;
+        border: 1px solid white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1); // Hiệu ứng hover mờ
+        }
+      }
+
+      .icon-cart {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .count-item-cart {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          padding: 2px 5px;
+          font-size: 12px;
+        }
+      }
+
+      .dropdown-menu {
+        background-color: #333; 
+        border: none;
+
+        .dropdown-item {
+          color: white;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        }
+
+        .dropdown-divider {
+          border-top: 1px solid #555;
+        }
+      }
+    }
+  }
+
+  .row {
+    margin-top: 1rem; 
+
+    .col {
+      nav {
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          .vip {
+            padding: 0 1rem; // Khoảng cách giữa các mục menu
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: #FFC107; // Màu hover: Vàng cam
+            }
+          }
+        }
+      }
+    }
+  }
 }

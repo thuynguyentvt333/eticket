@@ -224,7 +224,7 @@ const LoginPage = () => {
                 Don't have an account? <Link to="/register">Register here</Link>
               </div>
               <div>
-                <button onClick={() => setShowForgotPasswordPopup(true)}>
+                <button className='forgotPass' onClick={() => setShowForgotPasswordPopup(true)}>
                   Forgot Password?
                 </button>
               </div>

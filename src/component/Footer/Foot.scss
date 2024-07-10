@@ -1,3 +1,12 @@
 .vip{
     text-decoration: none;  
 }
+
+.ist-unstyled {
+    .nav-item {
+        .vip {
+            color: white !important;
+        }
+       
+    }
+}
