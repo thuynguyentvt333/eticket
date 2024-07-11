@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Card, Button, Row, Col, Typography, Divider, Modal, Checkbox, InputNumber } from 'antd';
 import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons';
-import './InforEvent.css';
+import './InforEvent.scss';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 
@@ -137,12 +137,14 @@ const InforEvent = () => {
         </Col>
         <Col span={12}>
           <Card
+            bodyStyle={{ padding: 0 }}className='img-card'
             hoverable
+            style={{marginBottom: '0px'}}
             cover={
               <img
                 alt={event.name}
-                src={event.banner !== "Not found" ? event.banner : "https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F608%2F332%2Fts%2Fds%2F1a%2Fcf%2F0a%2Fdd89be01b53f00f260e91370a58fcc86.jpg&w=1920&q=75"} // Placeholder image if no banner
-                style={{ maxWidth: '100%', height: 'auto' }}
+                src={`data:image/png;base64,${event.banner}`}
+                style={{ maxWidth: '100%', height: '100%' }}
               />
             }
           />
@@ -156,7 +158,7 @@ const InforEvent = () => {
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <div className="event-details">
-            <Typography.Title level={3} style={{ marginBottom: '8px' }}>About</Typography.Title>
+            <Typography.Title level={3} style={{ marginBottom: '8px' }}>Thông tin</Typography.Title>
             <p>{event.description}</p>
             <p>
               Hãy kêu gọi bạn bè và tham gia vào {event.location} vào ngày {new Date(event.start_time).toLocaleDateString('vi-VN')} để tận hưởng đêm nhạc và khiêu vũ đáng nhớ. Đừng bỏ lỡ cơ hội, mua vé ngay bây giờ!
@@ -171,11 +173,11 @@ const InforEvent = () => {
         </Col>
         <Col span={12}>
           <div className="event-details" style={{ textAlign: 'center' }}>
-            <img
-              src="https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F608%2F332%2Fts%2Fds%2F65%2F82%2F1e%2F23f76562706705c61e292b609df38ea1.png&w=1920&q=75"
-              alt="Banner"
-              style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
-            />
+          <img
+                alt={event.name}
+                src={`data:image/png;base64,${event.banner}`}
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
           </div>
         </Col>
       </Row>
@@ -184,7 +186,7 @@ const InforEvent = () => {
       <Row gutter={[16, 16]} style={{ marginTop: '48px' }} justify="center">
         <Col span={19}>
           <div className="event-details">
-            <Typography.Title level={3} style={{ marginBottom: '8px' }}>Ticket Information</Typography.Title>
+            <Typography.Title level={3} style={{ marginBottom: '8px' }}>Thông Tin Vé</Typography.Title>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <p style={{ margin: 0 }}>
                 <CalendarOutlined /> {new Date(event.start_time).toLocaleTimeString('vi-VN')} - {new Date(event.end_time).toLocaleTimeString('vi-VN')}, {new Date(event.start_time).toLocaleDateString('vi-VN')}
