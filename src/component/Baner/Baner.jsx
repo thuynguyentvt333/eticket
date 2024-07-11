@@ -14,19 +14,19 @@ const Banner = () => {
   
     const videoData = [
         {
-          link: 'https://salt.tkbcdn.com/ts/ds/1d/30/e9/771835ed49a7a8214fc991ab24193d31.mp4',
+          // link: 'https://salt.tkbcdn.com/ts/ds/1d/30/e9/771835ed49a7a8214fc991ab24193d31.mp4',
           id: 33,
         },
         {
-          link: 'https://salt.tkbcdn.com/ts/ds/8e/b8/42/9dd5bd8d03b82228e31b1d8f9910b360.mp4',
+          // link: 'https://salt.tkbcdn.com/ts/ds/8e/b8/42/9dd5bd8d03b82228e31b1d8f9910b360.mp4',
           id: 34,
         },
         {
-          link: 'https://salt.tkbcdn.com/ts/ds/b4/0d/ca/28c9461fd5df6452a3f4a7fea2be94f9.mp4',
+          // link: 'https://salt.tkbcdn.com/ts/ds/b4/0d/ca/28c9461fd5df6452a3f4a7fea2be94f9.mp4',
           id: 35,
         },
         {
-          link: 'https://salt.tkbcdn.com/ts/ds/8f/be/3c/167300b287d8e5eca7b35b39dbc21cf9.mp4',
+          // link: 'https://salt.tkbcdn.com/ts/ds/8f/be/3c/167300b287d8e5eca7b35b39dbc21cf9.mp4',
           id: 36,
         },
       ];
@@ -44,7 +44,7 @@ const Banner = () => {
   
     return (
         <div className="banner">
-        <Slider ref={sliderRef} {...settings}>
+        {/* <Slider ref={sliderRef} {...settings}>
           {videoData.map((item, index) => (
             <div key={index} className="banner-slide">
               <ReactPlayer
@@ -57,13 +57,13 @@ const Banner = () => {
                 className="rounded-video"
               />
               <div className="banner-content">
-                <Link to={`/eventinfor/${item.id}`}> {/* Sử dụng Link để chuyển trang */}
+                <Link to={`/eventinfor/${item.id}`}>
                   <button>Xem thêm</button> 
                 </Link>
               </div>
             </div>
           ))}
-        </Slider>
+        </Slider> */}
         <div className="banner-controls">
           <button onClick={() => sliderRef.current.slickPrev()}>
             <FontAwesomeIcon icon={faChevronLeft} />

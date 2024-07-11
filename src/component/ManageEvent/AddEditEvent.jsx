@@ -24,7 +24,7 @@ const AddEditEvent = () => {
     endTime: '',
     startBooking: '',
     endBooking: '',
-    ticketTypes: id ? [] : [{ typeName: '', price: '', quantity: '' }, { typeName: '', price: '', quantity: '' }],
+    ticketTypes: [{ typeName: '', price: '', quantity: '' }, { typeName: '', price: '', quantity: '' }],
   });
   const [step, setStep] = useState(1);
   const [sessionId, setSessionId] = useState('');
@@ -195,7 +195,34 @@ const AddEditEvent = () => {
     }
   };
 
-  const handleAddEventStep2 = (e) => {
+  const handleUploadImage = async (e) => {
+    e.preventDefault();
+    const file = e.target.eventBanner.files[0];
+    const formData = new FormData();
+    formData.append('eventBanner', file);
+
+    try {
+      const response = await axios.post('http://localhost:8080/merchant/eventImg', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+          Cookie: `JSESSIONID=${sessionId}`,
+        },
+        withCredentials: true,
+      });
+
+      if (response.data.code === 1000) {
+        setEventDetails(prevState => ({ ...prevState, eventBanner: response.data.result }));
+        toast.success('Image uploaded successfully');
+        setStep(3); // Chuyển đến bước tiếp theo sau khi tải ảnh thành công
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error.response ? error.response.data : error.message);
+      toast.error('Image upload failed');
+    }
+  };
+
+  const handleAddEventStep2 = async (e) => {
     e.preventDefault();
     const formatDateTime = (dateTime) => {
       const date = new Date(dateTime);
@@ -211,8 +238,6 @@ const AddEditEvent = () => {
       end_booking: formatDateTime(ticketDetails.endBooking),
       ticketTypeRequests: editedTickets, // Chỉ gửi những ticket đã được chỉnh sửa
     };
-
-    console.log("Step 2 Data: ", step2Data); // Log để kiểm tra dữ liệu gửi lên
 
     const url = id
       ? `http://localhost:8080/merchant/update/second-step/${id}`
@@ -270,8 +295,7 @@ const AddEditEvent = () => {
                   type="checkbox"
                   value={category.id}
                   checked={eventDetails.categories.includes(category.id)}
-                  onChange={id ? null : handleCategoryChange}
-                  readOnly={!!id}
+                  onChange={handleCategoryChange}
                 />
                 <label>{category.category_name}</label>
               </div>
@@ -280,7 +304,16 @@ const AddEditEvent = () => {
           <button type="submit">Next</button>
         </form>
       )}
-      {step === 2 && (
+      {step === 2 && !id && (
+        <form onSubmit={handleUploadImage}>
+          <div>
+            <label>Event Banner</label>
+            <input type="file" name="eventBanner" accept="image/*" required />
+          </div>
+          <button type="submit">Upload Image</button>
+        </form>
+      )}
+      {step === 3 && !id && (
         <form onSubmit={handleAddEventStep2}>
           <div>
             <label>Start Time</label>
@@ -306,31 +339,78 @@ const AddEditEvent = () => {
                 name="typeName"
                 placeholder="Type Name"
                 value={ticket.typeName}
-                onChange={id ? null : (e) => handleTicketTypeChange(index, e)} 
+                onChange={(e) => handleTicketTypeChange(index, e)} 
                 required
-                readOnly={!!id} 
               />
               <input
                 type="number"
                 name="price"
                 placeholder="Price"
                 value={ticket.price}
-                onChange={id ? null : (e) => handleTicketTypeChange(index, e)} 
+                onChange={(e) => handleTicketTypeChange(index, e)} 
                 required
-                readOnly={!!id} 
               />
               <input
                 type="number"
                 name="quantity"
                 placeholder="Quantity"
                 value={ticket.quantity}
-                onChange={id ? null : (e) => handleTicketTypeChange(index, e)} 
+                onChange={(e) => handleTicketTypeChange(index, e)} 
                 required
-                readOnly={!!id} 
               />
             </div>
           ))}
-          <button type="submit">{id ? 'Update Event' : 'Create Event'}</button>
+          <button type="submit">Create Event</button>
+        </form>
+      )}
+      {step === 2 && id && (
+        <form onSubmit={handleAddEventStep2}>
+          <div>
+            <label>Start Time</label>
+            <input type="datetime-local" name="startTime" value={ticketDetails.startTime} onChange={handleInputChange} required />
+          </div>
+          <div>
+            <label>End Time</label>
+            <input type="datetime-local" name="endTime" value={ticketDetails.endTime} onChange={handleInputChange} required />
+          </div>
+          <div>
+            <label>Start Booking</label>
+            <input type="datetime-local" name="startBooking" value={ticketDetails.startBooking} onChange={handleInputChange} required />
+          </div>
+          <div>
+            <label>End Booking</label>
+            <input type="datetime-local" name="endBooking" value={ticketDetails.endBooking} onChange={handleInputChange} required />
+          </div>
+          {ticketDetails.ticketTypes.map((ticket, index) => (
+            <div key={index}>
+              <label>Ticket Type {index + 1}</label>
+              <input
+                type="text"
+                name="typeName"
+                placeholder="Type Name"
+                value={ticket.typeName}
+                onChange={(e) => handleTicketTypeChange(index, e)} 
+                required
+              />
+              <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                value={ticket.price}
+                onChange={(e) => handleTicketTypeChange(index, e)} 
+                required
+              />
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
+                value={ticket.quantity}
+                onChange={(e) => handleTicketTypeChange(index, e)} 
+                required
+              />
+            </div>
+          ))}
+          <button type="submit">Update Event</button>
         </form>
       )}
     </div>

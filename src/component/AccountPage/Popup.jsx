@@ -1,8 +1,16 @@
 import React from 'react';
 import './Popup.scss';
+import { useNavigate } from 'react-router-dom'; 
 const Popup = ({ data, onClose }) => {
   if (!data) return null;
 
+  const navigate = useNavigate(); 
+
+  const handleViewStatistics = () => {
+    if (data.mid) {
+      navigate(`/admin/statistics/merchant/${data.mid}`);
+    }
+  };
   return (
     <div className="popup">
       <div className="popup-content">
@@ -43,7 +51,13 @@ const Popup = ({ data, onClose }) => {
                 <td>{data.description}</td>
               </tr>
             )}
-
+{data.mid && ( 
+              <tr>
+                <td colSpan="2" style={{ textAlign: 'center' }}>
+                  <button onClick={handleViewStatistics}>Xem Thống Kê</button>
+                </td>
+              </tr>
+            )}
             {/* Trường riêng cho User */}
             {data.age && (
               <tr>

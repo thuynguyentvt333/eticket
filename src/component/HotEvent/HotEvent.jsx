@@ -7,7 +7,7 @@ const HotEvent = ({ id, imgSrc, title, description }) => {
     <div className="hot-event">
       <div className='img-container'>
         <div className='img-event'>
-          <img src={imgSrc} alt={title} />
+          <img src={`data:image/png;base64,${imgSrc}`} alt={title} />
         </div>
       </div>
      
