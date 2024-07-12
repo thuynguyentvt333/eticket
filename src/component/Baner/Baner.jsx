@@ -6,30 +6,28 @@ import 'slick-carousel/slick/slick-theme.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom'; 
-import video33 from '../../assets/video/video33.mp4';
-import video34 from '../../assets/video/video34.mp4';
-import video35 from '../../assets/video/video35.mp4';
-import video36 from '../../assets/video/video36.mp4';
+
+
 import './Banner.css'; 
 const Banner = () => {
     const sliderRef = useRef(null);
-    // const [currentSlide, setCurrentSlide] = useState(0);
+  
   
     const videoData = [
         {
-          link: video33,
+          link: '/video/video33.mp4',
           id: 33,
         },
         {
-          link: video34,
+          link: '/video/video34.mp4',
           id: 34,
         },
         {
-          link: video35,
+          link: '/video/video35.mp4',
           id: 35,
         },
         {
-          link: video36,
+          link: '/video/video36.mp4',
           id: 36,
         },
       ];
