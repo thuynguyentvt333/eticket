@@ -161,7 +161,7 @@ const InforEvent = () => {
             <Typography.Title level={3} style={{ marginBottom: '8px' }}>Thông tin</Typography.Title>
             <p>{event.description}</p>
             <p>
-              Hãy kêu gọi bạn bè và tham gia vào {event.location} vào ngày {new Date(event.start_time).toLocaleDateString('vi-VN')} để tận hưởng đêm nhạc và khiêu vũ đáng nhớ. Đừng bỏ lỡ cơ hội, mua vé ngay bây giờ!
+              Hãy kêu gọi bạn bè và tham gia vào {event.location} vào ngày {new Date(event.start_time).toLocaleDateString('vi-VN')} để tận hưởng những trải nhiệm đáng nhớ. Đừng bỏ lỡ cơ hội, mua vé ngay bây giờ!
             </p>
             <p>
               Ngày: {new Date(event.start_time).toLocaleDateString('vi-VN')} ({new Date(event.start_time).toLocaleDateString('vi-VN', { weekday: 'long' })})

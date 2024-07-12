@@ -45,7 +45,7 @@ const Banner = () => {
   
     return (
         <div className="banner">
-        <Slider ref={sliderRef} {...settings}>
+        {/* <Slider ref={sliderRef} {...settings}>
           {videoData.map((item, index) => (
             <div key={index} className="banner-slide">
               <ReactPlayer
@@ -64,7 +64,7 @@ const Banner = () => {
               </div>
             </div>
           ))}
-        </Slider>
+        </Slider> */}
         <div className="banner-controls">
           <button onClick={() => sliderRef.current.slickPrev()}>
             <FontAwesomeIcon icon={faChevronLeft} />
