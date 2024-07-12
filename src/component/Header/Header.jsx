@@ -77,9 +77,9 @@ const Header = () => {
                 {role === "MERCHANT USER" &&
                   <li><Link className="dropdown-item" to="/manage-event">Dashboard</Link></li>
                 }
-                <li><hr className="dropdown-divider"/></li>
-                <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
                 <li><button className="dropdown-item" onClick={handleHistory}>Lịch sửa mua hàng</button></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li><button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button></li>
               </ul>
             </div>
           ) : (
