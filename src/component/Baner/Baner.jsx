@@ -48,7 +48,7 @@ const Baner = () => {
             <img src={item.link} alt={`Slide ${index}`} className="banner-image" />
             <div className="banner-content">
               <Link to={`/eventinfor/${item.id}`}>
-                <button>Xem thêm</button>
+                <button className='banner-info'>Xem thêm</button>
               </Link>
             </div>
           </div>

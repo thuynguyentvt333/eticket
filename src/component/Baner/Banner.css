@@ -43,3 +43,9 @@
   font-size: 24px;
   color: #030303;
 }
+.banner-info{
+  border-radius: 3px;
+  background-color: rgba(56, 55, 53, 0.073);
+  color:rgb(215, 220, 225);
+  margin-left:-50px ;
+}
