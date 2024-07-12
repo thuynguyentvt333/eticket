@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './EventList.scss';
-import automechanika from '../../assets/product/automechanika.png';
+// import automechanika from '../../assets/product/automechanika.png';
 
 const EventList = () => {
   const { categoryId } = useParams();
@@ -32,7 +32,7 @@ const EventList = () => {
       <div className="events" >
         {events.map(event => (
           <Link to={`/eventinfor/${event.id}`} key={event.id} className="event-card"  style={{ textDecoration: 'none',maxHeight: '400px' }}> 
-            <img src={event.banner !== "Not found" ? event.banner : automechanika} alt={event.name} />
+            <img src={event.banner} alt={event.name} />
             <div className="event-details">
               <h3>{event.name}</h3>
               <p>{event.city}, {event.location}</p>

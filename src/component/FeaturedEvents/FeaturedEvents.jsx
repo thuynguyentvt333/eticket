@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import automechanika from '../../assets/product/automechanika.png';
+// import automechanika from '../../assets/product/automechanika.png';
 import './FeaturedEvents.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -56,7 +56,7 @@ const FeaturedEvents = ({ categoryId, title }) => {
             <HotEvent
               key={event.id}
               id={event.id}
-              imgSrc={event.banner !== "Not found" ? event.banner : automechanika}
+              imgSrc={event.banner}
               title={event.name}
               description={`From ${event.minPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} • ${new Date(event.startDate).toLocaleDateString('vi-VN')}`}
             />

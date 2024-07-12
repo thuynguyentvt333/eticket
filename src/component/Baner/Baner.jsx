@@ -6,27 +6,30 @@ import 'slick-carousel/slick/slick-theme.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom'; 
-
-import './Banner.css'; // Tạo file CSS riêng cho component Banner
+import video33 from '../../assets/video/video33.mp4';
+import video34 from '../../assets/video/video34.mp4';
+import video35 from '../../assets/video/video35.mp4';
+import video36 from '../../assets/video/video36.mp4';
+import './Banner.css'; 
 const Banner = () => {
     const sliderRef = useRef(null);
     // const [currentSlide, setCurrentSlide] = useState(0);
   
     const videoData = [
         {
-          // link: 'https://salt.tkbcdn.com/ts/ds/1d/30/e9/771835ed49a7a8214fc991ab24193d31.mp4',
+          link: video33,
           id: 33,
         },
         {
-          // link: 'https://salt.tkbcdn.com/ts/ds/8e/b8/42/9dd5bd8d03b82228e31b1d8f9910b360.mp4',
+          link: video34,
           id: 34,
         },
         {
-          // link: 'https://salt.tkbcdn.com/ts/ds/b4/0d/ca/28c9461fd5df6452a3f4a7fea2be94f9.mp4',
+          link: video35,
           id: 35,
         },
         {
-          // link: 'https://salt.tkbcdn.com/ts/ds/8f/be/3c/167300b287d8e5eca7b35b39dbc21cf9.mp4',
+          link: video36,
           id: 36,
         },
       ];
@@ -44,7 +47,7 @@ const Banner = () => {
   
     return (
         <div className="banner">
-        {/* <Slider ref={sliderRef} {...settings}>
+        <Slider ref={sliderRef} {...settings}>
           {videoData.map((item, index) => (
             <div key={index} className="banner-slide">
               <ReactPlayer
@@ -63,7 +66,7 @@ const Banner = () => {
               </div>
             </div>
           ))}
-        </Slider> */}
+        </Slider>
         <div className="banner-controls">
           <button onClick={() => sliderRef.current.slickPrev()}>
             <FontAwesomeIcon icon={faChevronLeft} />
