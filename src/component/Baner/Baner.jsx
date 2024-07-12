@@ -13,20 +13,20 @@ const Baner = () => {
 
   const imageData = [
     {
-      link: '/video/image1.jpg',
-      id: 33,
+      link: '/video/danhvon.jpg',
+      id: 41,
     },
     {
-      link: '/images/image2.jpg',
-      id: 34,
+      link: '/video/fesstival.jpg',
+      id: 30,
     },
     {
-      link: '/images/image3.jpg',
+      link: '/video/Suppeer.png',
       id: 35,
     },
     {
-      link: '/images/image4.jpg',
-      id: 36,
+      link: '/video/trungquan.jpg',
+      id: 34,
     },
   ];
 
@@ -37,7 +37,7 @@ const Baner = () => {
     slidesToShow: 2, // Show 2 slides at a time
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 2500,
   };
 
   return (
@@ -54,14 +54,14 @@ const Baner = () => {
           </div>
         ))}
       </Slider>
-      <div className="banner-controls">
+      {/* <div className="banner-controls">
         <button onClick={() => sliderRef.current.slickPrev()}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <button onClick={() => sliderRef.current.slickNext()}>
           <FontAwesomeIcon icon={faChevronRight} />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

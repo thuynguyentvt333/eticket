@@ -1,5 +1,8 @@
 .banner {
   position: relative;
+  margin-left: 80px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .banner-slide {
@@ -38,5 +41,5 @@
   border: none;
   cursor: pointer;
   font-size: 24px;
-  color: #fff;
+  color: #030303;
 }
