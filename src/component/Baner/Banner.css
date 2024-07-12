@@ -1,76 +1,42 @@
 .banner {
-  position: relative; 
-  width: 100%; 
-  padding: 20px auto; 
-  margin: 0 5px;
-  .slick-slider {
-    margin: 0 20px;
-    padding: 0 !important; 
-  }
-
-  .banner-slide {
-    position: relative; 
-    height: 400px; 
-  
-    margin: 0 10px; 
-    padding-left: 30px;
-
-    .rounded-video {
-      border-radius: 15px;
-      overflow: hidden;
-   
-    }
-
-    .banner-content {
-      position: absolute;
-      bottom: 20px; 
-      left: 20px;
-      z-index: 10; 
-      button {
-        background-color: rgba(255, 255, 255, 0.353); 
-        color: #2c2a2a;
-        padding: 10px 20px 10px;
-        margin-left: 20px;
-        margin-bottom: 8px;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease; 
-        &:hover {
-          background-color: #333;
-          color: #fff;
-        }
-      }
-    }
-  }
-
-  .banner-controls {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    z-index: 10; 
-
-    button {
-      background: none;
-      border: none;
-      font-size: 30px;
-      color: #151515;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      &:hover {
-        color: #303131; 
-    }
-  }
+  position: relative;
 }
 
-@media (max-width: 768px) {
-  .banner {
-    .banner-slide {
-      height: 300px; 
-    }
-  }
-}}
+.banner-slide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-image {
+  width: 90%;
+  height: 98%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.banner-content {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.banner-controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+.banner-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+}

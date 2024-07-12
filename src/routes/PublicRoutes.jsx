@@ -36,7 +36,7 @@ const PublicRoutes = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/events/category/:categoryId" element={<EventList />} />
-        <Route path="/api/payment/infor" element={<ResultPayment />} />
+        <Route path="/api/payment/vnpay_response" element={<ResultPayment />} />
 
       </Routes>
     </PublicLayout>
