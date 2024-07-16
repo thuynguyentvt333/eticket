@@ -13,8 +13,8 @@ const Baner = () => {
 
   const imageData = [
     {
-      link: '/video/danhvon.jpg',
-      id: 41,
+      link: '/video/gala.jpg',
+      id: 45,
     },
     {
       link: '/video/fesstival.jpg',

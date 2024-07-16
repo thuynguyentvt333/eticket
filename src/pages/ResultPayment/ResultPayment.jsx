@@ -23,7 +23,7 @@ const ResultPayment = () => {
     const resultData = {
       responseCode,
       transactionNo,
-      amount,
+      amount:parseInt(amount) / 100,
       bankCode,
       orderInfo,
       email,

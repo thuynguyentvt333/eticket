@@ -36,9 +36,9 @@ const HistoryCart = () => {
       {orderHistory && orderHistory.length > 0 ? (
         orderHistory.map((order) => (
           <div key={order.paymentId} className="order-item">
-            <div className="order-header">
+            {/* <div className="order-header">
               <span className="order-date">Ngày thanh toán: {order.paymentTime}</span>
-            </div>
+            </div> */}
             <div className="order-details">
               {order.events.map((event) => (
                 <div key={event.eventId} className="event-item">
